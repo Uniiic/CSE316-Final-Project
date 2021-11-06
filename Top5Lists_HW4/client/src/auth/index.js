@@ -86,7 +86,6 @@ function AuthContextProvider(props) {
 
 
     auth.logoutUser = async function () {
-        const response = await api.logoutUser();
         authReducer({
             type: AuthActionType.LOGOUT_USER,
             payload: {
