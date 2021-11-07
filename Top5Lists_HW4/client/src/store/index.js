@@ -189,6 +189,7 @@ function GlobalStoreContextProvider(props) {
             }
             updateList(top5List);
         }
+        console.log(store);
     }
 
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST

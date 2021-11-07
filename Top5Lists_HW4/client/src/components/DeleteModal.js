@@ -28,7 +28,7 @@ export default function DeletionModal(){
         >
             <Typography align='center'>
                 <Box sx={style}>
-                    <Alert severity="warning">Do you want to delete {store.listMarkedForDeletion ? store.listMarkedForDeletion.name : "" } ?</Alert>
+                    <Alert severity="error">Do you want to delete {store.listMarkedForDeletion ? store.listMarkedForDeletion.name : "" } ?</Alert>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     </Typography>
                     <Button

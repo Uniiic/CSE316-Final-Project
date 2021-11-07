@@ -29,7 +29,7 @@ export default function MessageModal(){
             style={{display:'flex',alignItems:'center',justifyContent:'center'}}
         >
             <Box sx={style}>
-                <Alert severity="warning">{auth.msg}</Alert>
+                <Alert severity="error">{auth.msg}</Alert>
                 <Button style={ButtonStyle}
                     onClick={auth.handleClose}
                 >
