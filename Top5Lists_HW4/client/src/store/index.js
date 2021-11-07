@@ -210,7 +210,10 @@ function GlobalStoreContextProvider(props) {
             items: ["?", "?", "?", "?", "?"],
             ownerEmail: auth.user.email
         };
+
         const response = await api.createTop5List(payload);
+        console.log(response);
+
         if (response.data.success) {
             tps.clearAllTransactions();
             let newList = response.data.top5List;
