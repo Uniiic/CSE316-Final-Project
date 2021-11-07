@@ -381,6 +381,11 @@ function GlobalStoreContextProvider(props) {
         });
     }
 
+    store.deleteListCurrentList = async function(){
+        store.deleteMarkedList();
+        store.unmarkListForDeletion();
+    }
+
     return (
         <GlobalStoreContext.Provider value={{
             store
