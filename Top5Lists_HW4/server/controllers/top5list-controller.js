@@ -1,5 +1,6 @@
 const Top5List = require('../models/top5list-model');
 const User = require('../models/user-model');
+const auth = require('../auth');
 
 createTop5List = (req, res) => {
     const body = req.body;
@@ -90,13 +91,23 @@ deleteTop5List = async (req, res) => {
 }
 
 getTop5ListById = async (req, res) => {
-    await Top5List.findById({ _id: req.params.id }, (err, list) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err });
-        }
-        return res.status(200).json({ success: true, top5List: list })
-    }).catch(err => console.log(err))
+    auth.verify(req,res,async function(){
+        const loggedInUser = await User.findOne({_id:req.userId});
+        await Top5List.findById({_id:req.params.id},(err,list)=>{
+            if(err){
+                return res.status(400).json({success:false, error: err})
+            }
+            if(loggedInUser.email !== list.ownerEmail){
+                return res
+                .status(404)
+                .json({success:false,error: 'Top 5 lists not found'})
+            }
+            return res.status(200).json({success:true,top5List:list})
+        }).catch(err =>console.log(err))
+    })
 }
+
+
 getTop5Lists = async (req, res) => {
     await Top5List.find({}, (err, top5Lists) => {
         if (err) {

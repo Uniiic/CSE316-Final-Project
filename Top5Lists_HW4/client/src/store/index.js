@@ -58,7 +58,7 @@ function GlobalStoreContextProvider(props) {
             case GlobalStoreActionType.CHANGE_LIST_NAME: {
                 return setStore({
                     idNamePairs: payload.idNamePairs,
-                    currentList: payload.top5List,
+                    currentList: null,
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
@@ -351,11 +351,16 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.undo = function () {
-        tps.undoTransaction();
+        if(store.canUndo()){
+            tps.undoTransaction();
+        }
+       
     }
 
     store.redo = function () {
-        tps.doTransaction();
+        if(store.canRedo()){
+            tps.doTransaction();
+        }
     }
 
     store.canUndo = function() {
