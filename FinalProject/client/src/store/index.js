@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import jsTPS from '../common/jsTPS'
 import api from '../api'
 import MoveItem_Transaction from '../transactions/MoveItem_Transaction'
 import UpdateItem_Transaction from '../transactions/UpdateItem_Transaction'
@@ -30,7 +29,6 @@ export const GlobalStoreActionType = {
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
-const tps = new jsTPS();
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
 // AVAILABLE TO THE REST OF THE APPLICATION
@@ -199,7 +197,6 @@ function GlobalStoreContextProvider(props) {
             payload: {}
         });
         
-        tps.clearAllTransactions();
         history.push("/");
     }
 
@@ -216,7 +213,7 @@ function GlobalStoreContextProvider(props) {
         console.log(response);
 
         if (response.data.success) {
-            tps.clearAllTransactions();
+
             let newList = response.data.top5List;
             storeReducer({
                 type: GlobalStoreActionType.CREATE_NEW_LIST,
@@ -302,17 +299,6 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.addMoveItemTransaction = function (start, end) {
-        let transaction = new MoveItem_Transaction(store, start, end);
-        tps.addTransaction(transaction);
-    }
-
-    store.addUpdateItemTransaction = function (index, newText) {
-        let oldText = store.currentList.items[index];
-        let transaction = new UpdateItem_Transaction(store, index, oldText, newText);
-        tps.addTransaction(transaction);
-    }
-
     store.moveItem = function (start, end) {
         start -= 1;
         end -= 1;
@@ -350,26 +336,6 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.undo = function () {
-        if(store.canUndo()){
-            tps.undoTransaction();
-        }
-       
-    }
-
-    store.redo = function () {
-        if(store.canRedo()){
-            tps.doTransaction();
-        }
-    }
-
-    store.canUndo = function() {
-        return tps.hasTransactionToUndo();
-    }
-
-    store.canRedo = function() {
-        return tps.hasTransactionToRedo();
-    }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
     store.setIsListNameEditActive = function () {

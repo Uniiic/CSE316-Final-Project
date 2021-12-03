@@ -33,24 +33,7 @@ export default function LoginScreen(){
     }
 
     return (
-        <ThemeProvider theme={theme}>
-          <Grid container component="main" sx={{ height: '100vh' }}>
-            <CssBaseline />
-            <Grid
-              item
-              xs={false}
-              sm={4}
-              md={7}
-              sx={{
-                backgroundImage: 'url(https://source.unsplash.com/random)',
-                backgroundRepeat: 'no-repeat',
-                backgroundColor: (t) =>
-                  t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} sm={8} md={12} elevation={6}>
               <Box
                 sx={{
                   my: 8,
@@ -87,10 +70,6 @@ export default function LoginScreen(){
                     id="password"
                     autoComplete="current-password"
                   />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
                   <Button
                     type="submit"
                     fullWidth
@@ -101,9 +80,6 @@ export default function LoginScreen(){
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
                     </Grid>
                     <Grid item>
                       <Link href="#" variant="body2">
@@ -115,8 +91,5 @@ export default function LoginScreen(){
                 </Box>
               </Box>
             </Grid>
-          </Grid>
-          <MessageModal />
-        </ThemeProvider>
       );
     }

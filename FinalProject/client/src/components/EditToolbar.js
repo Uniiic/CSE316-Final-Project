@@ -1,9 +1,16 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import Button from '@mui/material/Button';
-import UndoIcon from '@mui/icons-material/Undo';
-import RedoIcon from '@mui/icons-material/Redo';
-import CloseIcon from '@mui/icons-material/HighlightOff';
+import HomeIcon from '@mui/icons-material/Home';
+import GroupsIcon from '@mui/icons-material/Groups';
+import PersonIcon from '@mui/icons-material/Person';
+import IconButton from '@mui/material/IconButton';
+import FunctionsIcon from '@mui/icons-material/Functions';
+import TextField from '@mui/material/TextField';
+import SortIcon from '@mui/icons-material/Sort';
+import { Typography } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 
 /*
     This toolbar is a functional React component that
@@ -13,43 +20,107 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
 */
 function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
 
-    function handleUndo() {
-        store.undo();
-    }
-    function handleRedo() {
-        store.redo();
-    }
-    function handleClose() {
-        store.closeCurrentList();
-    }
-    let editStatus = false;
-    if (store.isListNameEditActive) {
-        editStatus = true;
-    }  
+
+    const handleProfileMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const sortMenuID = "primary-sort-menu"
+    const sortMenu = 
+    <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+        }}
+        id={sortMenuID}
+        keepMounted
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+        }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+    >
+        {/* onClick={handleLogout} */}
+        <MenuItem>Publish Data(Newest)</MenuItem>  
+        <MenuItem>Publish Data(Oldest)</MenuItem>  
+        <MenuItem>Views</MenuItem>  
+        <MenuItem>Likes</MenuItem> 
+        <MenuItem>Dislikes</MenuItem>   
+    </Menu>
+
     return (
-        <div id="edit-toolbar">
-            <Button 
-                id='undo-button'
-                disabled = {!store.canUndo() || store.isListNameEditActive}
-                onClick={handleUndo}
-                variant="contained">
-                    <UndoIcon />
-            </Button>
-            <Button 
-                id='redo-button'
-                disabled = {!store.canRedo() || store.isListNameEditActive}
-                onClick={handleRedo}
-                variant="contained">
-                    <RedoIcon />
-            </Button>
-            <Button 
-                disabled={editStatus}
-                id='close-button'
-                onClick={handleClose}
-                variant="contained">
-                    <CloseIcon />
-            </Button>
+        <div>
+
+            <div id="edit-toolbar">
+                <Button
+                id="home-button"
+                >
+                    <HomeIcon 
+                        
+                        style={{fontSize:50}}
+                    />
+                </Button>
+
+                <Button 
+                id="groups-button"
+                >
+                    <GroupsIcon 
+        
+                        style={{fontSize:50}}
+                    />
+                </Button>
+
+                <Button 
+                id="person-button"
+                >
+                    <PersonIcon 
+                    
+                        style={{fontSize:50}}
+                    />
+                </Button>
+
+                <Button 
+                id="functions-button"
+                >
+                    <FunctionsIcon 
+                       
+                        style={{fontSize:50}}
+                    />
+                </Button>
+            <div id="search-bar">
+                <TextField 
+                    style={{width:300}}
+                    placeholder = 'Search'
+                />
+            </div>
+
+
+            
+            </div>
+            <div>
+                <Typography variant="h5" id="sort-by">
+                    SORT BY
+                </Typography>
+                <Button 
+                    id="sort-button"
+                >
+                    <SortIcon 
+                        style={{fontSize:50}}
+                        onClick={handleProfileMenuOpen}
+                    />
+                </Button>
+                {sortMenu}
+            </div>
+        
         </div>
     )
 }

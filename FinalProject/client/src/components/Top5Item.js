@@ -46,7 +46,6 @@ function Top5Item(props) {
         console.log("handleDrop (sourceId, targetId): ( " + sourceId + ", " + targetId + ")");
 
         // UPDATE THE LIST
-        store.addMoveItemTransaction(sourceId, targetId);
     }
 
 
@@ -68,7 +67,6 @@ function Top5Item(props) {
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
-            store.addUpdateItemTransaction(index,text);
             toggleEdit();
         }
     }
