@@ -49,12 +49,11 @@ function EditToolbar() {
         open={isMenuOpen}
         onClose={handleMenuClose}
     >
-        {/* onClick={handleLogout} */}
-        <MenuItem>Publish Data(Newest)</MenuItem>  
-        <MenuItem>Publish Data(Oldest)</MenuItem>  
-        <MenuItem>Views</MenuItem>  
-        <MenuItem>Likes</MenuItem> 
-        <MenuItem>Dislikes</MenuItem>   
+        <MenuItem onClick={handleMenuClose}>Publish Data(Newest)</MenuItem>  
+        <MenuItem onClick={handleMenuClose}>Publish Data(Oldest)</MenuItem>  
+        <MenuItem onClick={handleMenuClose}>Views</MenuItem>  
+        <MenuItem onClick={handleMenuClose}>Likes</MenuItem> 
+        <MenuItem onClick={handleMenuClose}>Dislikes</MenuItem>   
     </Menu>
 
     return (

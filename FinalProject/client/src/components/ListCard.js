@@ -6,7 +6,11 @@ import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import Grid from '@mui/material/Grid';
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -67,24 +71,62 @@ function ListCard(props) {
             }
             }
             style={{
-                fontSize: '48pt',
+                fontSize: '40pt',
                 width: '100%'
             }}
         >
-                <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-                <Box sx={{ p: 1 }}>
-                    <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon style={{fontSize:'48pt'}} />
-                    </IconButton>
-                </Box>
-                <Box sx={{ p: 1 }}>
-                    <IconButton onClick={(event) => {
+
+        <Grid container style={{height:150}}>
+
+        <Grid xs={3} md={7} style={{fontSize:'28pt'}}>
+          {idNamePair.name}
+        </Grid>
+
+        <Grid xs={3} md={2}>
+          <IconButton>
+                <ThumbUpIcon style={{fontSize:'37pt'}} />
+          </IconButton>
+          #
+        </Grid>
+
+        <Grid xs={3} md={2}>
+          <IconButton>
+                <ThumbDownIcon style={{fontSize:'37pt'}} />
+          </IconButton>
+          #
+        </Grid>
+
+        <Grid xs={3} md={1}>
+            <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'48pt'}} />
-                    </IconButton>
-                </Box>
+                        <DeleteIcon style={{fontSize:'37pt'}} />
+            </IconButton>
+        </Grid>
+{/*  */}
+        <Grid xs={3} md={12} style={{fontSize:'20pt',paddingBottom:15}}>
+          By: ???
+        </Grid>
+{/*  */}
+        <Grid xs={3} md={7} style={{fontSize:'20pt',height:30}}>
+          Edit
+        </Grid>
+
+        <Grid xs={3} md={4} style={{fontSize:'20pt',height:30}}>
+          Views: #####
+        </Grid>
+
+        <Grid xs={3} md={1}>
+          <IconButton>
+                <ExpandMoreIcon style={{fontSize:'45pt',height:50}}
+                                viewBox='0 7 24 24' />
+          </IconButton>
+        </Grid>
+
+      </Grid>
+            
         </ListItem>
+
 
     if (editActive) {
         cardElement =
