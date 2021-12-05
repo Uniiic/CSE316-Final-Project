@@ -109,16 +109,18 @@ body {
   top: 10%;
   width: 100%;
   height: 80%;
-  background-color: var(--swatch-primary);
 }
 
 #top5-workspace {
   position: absolute;
-  left: 0%;
+  left: 4%;
   top: 10%;
-  width: 100%;
-  height: 80%;
-  background-color: var(--swatch-accent);
+  width: 92%;
+  height: 87%;
+  background-color: #76b0fc;  
+  border: black;
+  border-width: 0.1ch;
+  border-style: solid;
 }
 
 #top5-statusbar {
@@ -207,29 +209,29 @@ body {
   top: 0%;
   width: 100%;
   height: 100%;
+  /* background-color: rgb(98, 192, 255); */
 }
 
 #edit-numbering {
   position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 20%;
-  height: 100%;
-  background-color: var(--swatch-status);
+  left: 2%;
+  top: 11%;
+  width: 10%;
+  height: 65%;
+  /* background-color: rgb(217, 184, 255); */
 }
 
 #edit-items {
   position: absolute;
-  left: 20%;
-  top: 0%;
-  width: 80%;
-  height: 100%;
-  background-color: var(--swatch-primary);
+  left: 9%;
+  top: 11%;
+  width: 90%;
+  height: 68%;
+  background-color: rgb(45, 96, 236);
 }
 
 .item-number,
-.top5-item,
-.top5-item-dragged-to {
+.top5-item{
   display: flex;
   align-items: center;
   font-size: 48pt;
@@ -238,10 +240,12 @@ body {
 
 .item-number {
   justify-content: center;
-  width: 100%;
-  border: 1px 0px 1px 1px;
-  border-color: black;
-  background-color: linen;
+  width: 60%;
+  border-bottom: 0.8mm;
+  border-right: 2mm;
+  border-style: solid;
+  border-color: rgb(45, 96, 236);
+  background-color: rgb(233, 193, 16);
   color: black;
 }
 
@@ -249,17 +253,25 @@ input {
   font-size: 20pt;
 }
 
-.top5-item,
-.top5-item-dragged-to {
+.top5-item{
   text-align: left;
   width: 95%;
-  padding-left: 5%;
 }
-.top5-item {
-  background-color: var(--swatch-complement);
+
+#save-button{
+  position:absolute;
+  right:20%;
+  bottom: 10%;
+  color: black;
+  background-color: #f7c72c;
 }
-.top5-item-dragged-to {
-  background-color: var(--swatch-accent);
+
+#publish-button{
+  position:absolute;
+  right:10%;
+  bottom: 10%;
+  color: black;
+  background-color: #f7c72c;
 }
 
 .disabled {

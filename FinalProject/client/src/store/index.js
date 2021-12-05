@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import api from '../api'
-import MoveItem_Transaction from '../transactions/MoveItem_Transaction'
-import UpdateItem_Transaction from '../transactions/UpdateItem_Transaction'
 import AuthContext from '../auth'
 /*
     This is our global data store. Note that it uses the Flux design pattern,
@@ -40,7 +38,8 @@ function GlobalStoreContextProvider(props) {
         newListCounter: 0,
         listNameActive: false,
         itemActive: false,
-        listMarkedForDeletion: null
+        listMarkedForDeletion: null,
+        published: false
     });
     const history = useHistory();
 
@@ -356,6 +355,30 @@ function GlobalStoreContextProvider(props) {
     store.deleteListCurrentList = async function(){
         store.deleteMarkedList();
         store.unmarkListForDeletion();
+    }
+
+
+    store.saveList = function(listName,Name0,Name1,Name2,Name3,Name4){
+        store.currentList.name = listName;
+        store.currentList.items[0] = Name0;
+        store.currentList.items[1] = Name1;
+        store.currentList.items[2] = Name2;
+        store.currentList.items[3] = Name3;
+        store.currentList.items[4] = Name4;
+        store.updateCurrentList();
+        store.closeCurrentList();
+    }
+
+    store.publishedList = function(listName,Name0,Name1,Name2,Name3,Name4){
+        store.currentList.name = listName;
+        store.currentList.items[0] = Name0;
+        store.currentList.items[1] = Name1;
+        store.currentList.items[2] = Name2;
+        store.currentList.items[3] = Name3;
+        store.currentList.items[4] = Name4;
+        store.published = true;
+        store.updateCurrentList();
+        store.closeCurrentList();
     }
 
     return (

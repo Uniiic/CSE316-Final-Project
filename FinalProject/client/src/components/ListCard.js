@@ -64,19 +64,19 @@ function ListCard(props) {
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
+            sx={{ marginTop: '5px', display: 'flex', p: 1 }}
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }
             }
             style={{
-                fontSize: '40pt',
+                fontSize: '20pt',
                 width: '100%'
             }}
         >
 
-        <Grid container style={{height:150}}>
+        <Grid container style={{height:135}}>
 
         <Grid xs={3} md={7} style={{fontSize:'28pt'}}>
           {idNamePair.name}
