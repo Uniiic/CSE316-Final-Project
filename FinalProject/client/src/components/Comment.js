@@ -21,7 +21,15 @@ function Comment(props) {
             }}
         
         >
-            {idNamePair}
+        <div>
+            <div id = "comment-poster-name">
+                {idNamePair[0]}
+            </div>
+            <div>
+                {idNamePair[1]}
+            </div>
+        </div>
+
         </ListItem>
 
 

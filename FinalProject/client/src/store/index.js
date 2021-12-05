@@ -239,7 +239,7 @@ function GlobalStoreContextProvider(props) {
             viewNumber: 0,
             likeNumber: 0,
             dislikeNumber: 0,
-            comments: [],
+            comments: [["tcl","1123"],["cyn","123413"],["dasda","dsacds123"]],
             published: false,
             publishDate: new Date(),
             publishDateString: ""

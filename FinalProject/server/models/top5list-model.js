@@ -10,7 +10,7 @@ const Top5ListSchema = new Schema(
         viewNumber: {type: Number, required: true },
         likeNumber: {type: Number, required: true },
         dislikeNumber: {type: Number, required: true },
-        comments: { type: [String], required: true },
+        comments: { type: [[String]], required: true },
         published: {type: Boolean, required: true},
         publishDate: {type: Date, required: false},
         publishDateString: {type: String, required: false}

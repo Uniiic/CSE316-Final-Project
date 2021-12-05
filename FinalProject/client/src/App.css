@@ -297,6 +297,10 @@ input {
   font-size: 10pt;
 }
 
+#comment-poster-name{
+  color: #073ccf;
+  text-decoration: underline;
+}
 
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */
 
