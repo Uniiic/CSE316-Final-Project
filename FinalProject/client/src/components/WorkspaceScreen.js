@@ -65,19 +65,16 @@ function WorkspaceScreen() {
         let itemName5 = formData.get('item-name5-textfield');
 
 
-        console.log(itemName1);
         
-        if(listName === "" || itemName1 === "" || itemName2 === "" || itemName3 === "" || itemName4 === "" || itemName5 === "" ){
-            console.log("empty")
+       
+        if(save === true){  //save list
+            store.saveList(listName, itemName1, itemName2, itemName3, itemName4, itemName5);
         }
-        else{
-            if(save === true){  //save list
-                store.saveList(listName, itemName1, itemName2, itemName3, itemName4, itemName5);
-            }
-            else{  //publish list
-                store.publishList(listName, itemName1, itemName2, itemName3, itemName4, itemName5);
-            }
+        else{  //publish list
+            store.publishedList(listName, itemName1, itemName2, itemName3, itemName4, itemName5);
+            console.log("publish");
         }
+        
     }
 
 

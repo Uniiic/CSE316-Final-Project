@@ -11,6 +11,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material'
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -60,19 +61,30 @@ function ListCard(props) {
         setText(event.target.value);
     }
 
+    let listCardBackgroundColor = idNamePair.published ? '#d4d4f5' : '#fffff1'
+
+    let editButton = 
+    <div xs={3} md={0.5} style={{fontSize:'20pt',height:30,color:"red",textDecoration:"underline",cursor:"grab"}}
+          button onClick={(event) => {handleLoadList(event, idNamePair._id)}}>
+      Edit
+    </div>
+    if(idNamePair.published){
+        editButton = 
+        <div>
+            <Typography display="inline" sx={{my: 0, mx: 0}}>Published: </Typography>
+            <Typography display="inline" sx={{color: '#6db665'}}>{idNamePair.publishDateString}</Typography>
+        </div>
+    }
+
     let cardElement =
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ marginTop: '5px', display: 'flex', p: 1 }}
-            button
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
-            }
-            }
             style={{
                 fontSize: '20pt',
-                width: '100%'
+                width: '100%',
+                backgroundColor: listCardBackgroundColor
             }}
         >
 
@@ -104,16 +116,27 @@ function ListCard(props) {
             </IconButton>
         </Grid>
 {/*  */}
-        <Grid xs={3} md={12} style={{fontSize:'20pt',paddingBottom:15}}>
-          By: ???
-        </Grid>
-{/*  */}
-        <Grid xs={3} md={7} style={{fontSize:'20pt',height:30}}>
-          Edit
+        <Grid xs={3} md={0.5} style={{fontSize:'20pt',paddingBottom:15}}>
+          By:
         </Grid>
 
-        <Grid xs={3} md={4} style={{fontSize:'20pt',height:30}}>
-          Views: #####
+        <Grid xs={3} md={11.5} style={{fontSize:'20pt',paddingBottom:15,color:"blue",textDecoration:"underline"}}>
+          {idNamePair.owner}
+        </Grid>
+{/*  */}
+        <Grid xs={3} md={2}>
+          {editButton}
+        </Grid>
+
+        <Grid xs={3} md={5} style={{fontSize:'20pt',height:30}}>
+
+        </Grid>
+
+        <Grid xs={3} md={1} style={{fontSize:'20pt',height:30}}>
+          Views:
+        </Grid>
+        <Grid xs={3} md={3} style={{fontSize:'20pt',height:30,color:"red"}}>
+          #####
         </Grid>
 
         <Grid xs={3} md={1}>

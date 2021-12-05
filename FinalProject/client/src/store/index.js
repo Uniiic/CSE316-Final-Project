@@ -39,7 +39,6 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         itemActive: false,
         listMarkedForDeletion: null,
-        published: false
     });
     const history = useHistory();
 
@@ -202,11 +201,19 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
+
         let payload = {
             name: newListName,
             items: ["?", "?", "?", "?", "?"],
-            ownerEmail: auth.user.email
-            // owner: auth.user.firstName+" "+auth.user.lastName
+            ownerEmail: auth.user.email,
+            owner: auth.user.firstName+" "+auth.user.lastName,
+            viewNumber: 0,
+            likeNumber: 0,
+            dislikeNumber: 0,
+            comments: [],
+            published: false,
+            publishDate: new Date(),
+            publishDateString: ""
         };
 
         const response = await api.createTop5List(payload);
@@ -377,7 +384,12 @@ function GlobalStoreContextProvider(props) {
         store.currentList.items[2] = Name2;
         store.currentList.items[3] = Name3;
         store.currentList.items[4] = Name4;
-        store.published = true;
+        store.currentList.published = true;
+        store.currentList.publishDate = new Date();
+        const date = new Date();
+        let month = date.toLocaleString('default', { month: 'short' });
+        store.currentList.publishDateString =  month+" "+date.getDate()+", "+date.getFullYear();
+
         store.updateCurrentList();
         store.closeCurrentList();
     }
