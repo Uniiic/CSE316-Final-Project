@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import { Fab, Typography } from '@mui/material'
@@ -14,14 +14,24 @@ import EditToolbar from './EditToolbar';
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
+    const [ homeIcon,setHomeIcon ] = useState(false);
 
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
 
+
+
     function handleCreateNewList() {
         store.createNewList();
     }
+
+    function handleHomeIconSearching(textValue) {
+        // setHomeIcon(true);
+        // console.log(homeIcon);
+    }
+
+
     let listCard = "";
     if (store) {
         listCard = 
@@ -36,7 +46,32 @@ const HomeScreen = () => {
                 ))
             }
             </List>;
+
+    }else if(homeIcon){
+        listCard = 
+        <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
+        {
+            store.idNamePairs.map((pair) => (
+                <ListCard
+                    setHomeIcon={setHomeIcon()}
+                    handleHomeIconSearching={handleHomeIconSearching()}
+                    key={pair._id}
+                    idNamePair={pair}
+                    selected={false}
+                />
+            ))
+        }
+        </List>;
     }
+
+
+
+
+
+
+
+
+
 
     return (
         <div id="top5-list-selector">

@@ -407,10 +407,14 @@ input {
   right:0%;
 }
 
-#search-bar{
+#search-bar-position{
   position:absolute;
   left:27%;
   width: 450;
+}
+
+#search-bar{
+  
 }
 
 #sort-by{

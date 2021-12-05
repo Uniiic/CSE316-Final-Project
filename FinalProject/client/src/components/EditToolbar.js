@@ -18,11 +18,11 @@ import Menu from '@mui/material/Menu';
     
     @author McKilla Gorilla
 */
-function EditToolbar() {
+function EditToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
-
+    const { handleHomeIconSearching } = props;
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -31,6 +31,8 @@ function EditToolbar() {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
+
 
     const sortMenuID = "primary-sort-menu"
     const sortMenu = 
@@ -56,6 +58,10 @@ function EditToolbar() {
         <MenuItem onClick={handleMenuClose}>Dislikes</MenuItem>   
     </Menu>
 
+    // function handleHomeIconSeaching(){
+    //     handleHomeIconSearching(document.getElementById("search-bar").value);
+    // }
+
     return (
         <div>
 
@@ -64,7 +70,7 @@ function EditToolbar() {
                 id="home-button"
                 >
                     <HomeIcon 
-                        
+                        // onClick={handleHomeIconSeaching}
                         style={{fontSize:50}}
                     />
                 </Button>
@@ -95,16 +101,18 @@ function EditToolbar() {
                         style={{fontSize:50}}
                     />
                 </Button>
-            <div id="search-bar">
-                <TextField 
+
+                <div id="search-bar-position">
+                    <TextField 
+                    id="search-bar"
                     style={{width:300}}
                     placeholder = 'Search'
-                />
+                    />
+                </div>
+
             </div>
 
 
-            
-            </div>
             <div>
                 <Typography variant="h5" id="sort-by">
                     SORT BY

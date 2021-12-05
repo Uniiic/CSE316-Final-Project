@@ -217,6 +217,126 @@ function GlobalStoreContextProvider(props) {
         console.log(store);
     }
 
+
+    store.likeListButton = async function (id, both, like, dislike) {
+        let response = await api.getTop5ListById(id);
+        if (response.data.success) {
+
+            let top5List = response.data.top5List;
+            if(both){
+                let likes = top5List.likeList;
+                likes.push(auth.user.email);
+                top5List.likeList = likes;
+                top5List.likeNumber = top5List.likeNumber+1;
+            }else if(like){
+                let likes = top5List.likeList;
+                const index = likes.indexOf(auth.user.email);
+                console.log(index);
+                if (index >= 0) {
+                    likes.splice(index, 1);
+                }
+                top5List.likeList = likes;
+                top5List.likeNumber = top5List.likeNumber-1;
+            }else if(dislike){
+                let dislikes = top5List.dislikeList;
+                const index = dislikes.indexOf(auth.user.email);
+                console.log(index);
+                if (index >= 0) {
+                    dislikes.splice(index, 1);
+                }
+                top5List.dislikeList = dislikes;
+                top5List.dislikeNumber = top5List.dislikeNumber-1;
+
+                let likes = top5List.likeList;
+                likes.push(auth.user.email);
+                top5List.likeList = likes;
+                top5List.likeNumber = top5List.likeNumber+1;
+            }
+
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    async function getListPairs(top5List) {
+                        response = await api.getTop5ListPairs();
+                        if (response.data.success) {
+                            let pairsArray = response.data.idNamePairs;
+                            storeReducer({
+                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                payload: {
+                                    idNamePairs: pairsArray,
+                                    top5List: top5List
+                                }
+                            });
+                        }
+                    }
+                    getListPairs(top5List);
+                }
+            }
+            updateList(top5List);
+        }
+        console.log(store);
+    }
+
+
+    store.dislikeListButton = async function (id, both, dislike, like) {
+        let response = await api.getTop5ListById(id);
+        if (response.data.success) {
+
+            let top5List = response.data.top5List;
+            if(both){
+                let dislikes = top5List.dislikeList;
+                dislikes.push(auth.user.email);
+                top5List.dislikeList = dislikes;
+                top5List.dislikeNumber = top5List.dislikeNumber+1;
+            }else if(dislike){
+                let dislikes = top5List.dislikeList;
+                const index = dislikes.indexOf(auth.user.email);
+                console.log(index);
+                if (index >= 0) {
+                    dislikes.splice(index, 1);
+                }
+                top5List.dislikeList = dislikes;
+                top5List.dislikeNumber = top5List.dislikeNumber-1;
+            }else if(like){
+                let dislikes = top5List.dislikeList;
+                dislikes.push(auth.user.email);
+                top5List.dislikeList = dislikes;
+                top5List.dislikeNumber = top5List.dislikeNumber+1;
+
+                let likes = top5List.likeList;
+                const index = likes.indexOf(auth.user.email);
+                console.log(index);
+                if (index >= 0) {
+                    likes.splice(index, 1);
+                }
+                top5List.likeList = likes;
+                top5List.likeNumber = top5List.likeNumber-1;
+            }
+
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    async function getListPairs(top5List) {
+                        response = await api.getTop5ListPairs();
+                        if (response.data.success) {
+                            let pairsArray = response.data.idNamePairs;
+                            storeReducer({
+                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                payload: {
+                                    idNamePairs: pairsArray,
+                                    top5List: top5List
+                                }
+                            });
+                        }
+                    }
+                    getListPairs(top5List);
+                }
+            }
+            updateList(top5List);
+        }
+        console.log(store);
+    }
+
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
     store.closeCurrentList = function () {
         storeReducer({
@@ -422,6 +542,8 @@ function GlobalStoreContextProvider(props) {
         store.updateCurrentList();
         store.closeCurrentList();
     }
+
+
 
     return (
         <GlobalStoreContext.Provider value={{

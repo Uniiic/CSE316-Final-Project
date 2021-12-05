@@ -14,6 +14,9 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material'
 import Comment from './Comment';
 import List from '@mui/material/List';
+import AuthContext from '../auth'
+
+
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -28,7 +31,7 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const { idNamePair } = props;
     const [expandActive, setexpandActive] = useState(false);
-
+    const { auth } = useContext(AuthContext);
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
             // CHANGE THE CURRENT LIST
@@ -160,6 +163,53 @@ function ListCard(props) {
 
 
 
+    function handleAddLike() {
+        var both = false;
+        var likeAlready= false;
+        var dislikeAlready = false;
+
+        if(idNamePair.likeList.indexOf(auth.user.email) < 0 && idNamePair.dislikeList.indexOf(auth.user.email) < 0){
+            both = true;
+            document.getElementById("ThumbUpIcon").style.color = "red";
+        }else if(idNamePair.likeList.indexOf(auth.user.email) >= 0 && idNamePair.dislikeList.indexOf(auth.user.email) < 0){
+            likeAlready = true;
+            document.getElementById("ThumbUpIcon").style.color = "grey";
+        }else{
+            dislikeAlready = true;
+            document.getElementById("ThumbUpIcon").style.color = "red";
+            document.getElementById("ThumbDownIcon").style.color = "grey";
+        }
+        store.likeListButton(idNamePair._id , both, likeAlready, dislikeAlready);
+    }
+
+    function handleAddDislike() {
+        var both = false;
+        var dislikeAlready = false;
+        var likeAlready= false;
+
+        if(idNamePair.likeList.indexOf(auth.user.email) < 0 && idNamePair.dislikeList.indexOf(auth.user.email) < 0){
+            both = true;
+            document.getElementById("ThumbDownIcon").style.color = "red";
+        }else if(idNamePair.likeList.indexOf(auth.user.email) < 0 && idNamePair.dislikeList.indexOf(auth.user.email) >= 0){
+            dislikeAlready = true;
+            document.getElementById("ThumbDownIcon").style.color = "grey";
+        }else{
+            likeAlready = true;
+            document.getElementById("ThumbDownIcon").style.color = "red";
+            document.getElementById("ThumbUpIcon").style.color = "grey";
+        }
+        console.log(both);
+        console.log(dislikeAlready);
+        console.log(likeAlready);
+        store.dislikeListButton(idNamePair._id , both, dislikeAlready, likeAlready);
+    }
+
+
+
+
+
+
+
 
     let cardElement =
         <ListItem
@@ -184,14 +234,14 @@ function ListCard(props) {
 
         <Grid xs={3} md={2}>
           <IconButton>
-                <ThumbUpIcon style={{fontSize:'29pt'}} />
+                <ThumbUpIcon id = "ThumbUpIcon"style={{fontSize:'29pt'}} onClick={handleAddLike} />
           </IconButton>
           {idNamePair.likeNumber}
         </Grid>
 
         <Grid xs={3} md={2}>
           <IconButton>
-                <ThumbDownIcon style={{fontSize:'29pt'}} />
+                <ThumbDownIcon id = "ThumbDownIcon" style={{fontSize:'29pt'}} onClick={handleAddDislike}/>
           </IconButton>
           {idNamePair.dislikeNumber}
         </Grid>
