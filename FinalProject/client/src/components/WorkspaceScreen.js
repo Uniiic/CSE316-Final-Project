@@ -119,53 +119,9 @@ function WorkspaceScreen() {
             
 
 
-
-
-
-
-
-
-            {/* <div id="top5-workspace">
-                <div>
-                    <TextField id="11111"
-                        style={{width:"50%",backgroundColor:"white",borderStyle:"solid",
-                        borderWidth:"0.7mm",borderColor:"#669966"}}
-                        inputProps={{style: {fontSize: 10}}}
-                        defaultValue={store.currentList.name}
-                    />  
-                </div>
-                <div id="edit-list-item">
-                    <div id="edit-numbering">
-                        <div className="item-number"><Typography variant="h3">1.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">2.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">3.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">4.</Typography></div>
-                        <div className="item-number"><Typography variant="h3">5.</Typography></div>
-                    </div>
-                    {editItems}
-                </div>
-            </div>
-
-            
-            <Button id='save-button'>
-                Save
-            </Button>
-
-            <Button id='publish-button'>
-                Publish
-            </Button> */}
-
-
-
-
-
-
-
-
-
             <div id="top5-workspace">
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                    <div id="top5-workspace-textfield-part2">
+                    <div>
                         <Button id='save-button' style={{maxWidth: '75px',  minWidth: '75px'}} type="submit">
                             Save
                         </Button>
@@ -175,8 +131,8 @@ function WorkspaceScreen() {
                         </Button>
                     </div>
 
-                    <div id="top5-workspace-textfield">
-                        <Grid container spacing={1}>
+                    <div>
+                        <Grid container>
 
 
                             <Grid item xs={3} md={12}>
@@ -184,93 +140,94 @@ function WorkspaceScreen() {
                                 name="list-name-textfield"
                                 id="list-name-textfield"
                                 required
-                                style={{width: 600}}
+                                style={{width: "50%",backgroundColor:"white",borderStyle:"solid",
+                                borderWidth:"0.7mm",borderColor:"#669966"}}
                                 defaultValue={store.currentList.name}
-                                inputProps={{style: {fontSize:26}}}
+                                inputProps={{style: {fontSize:13}}}
                                 />
                             </Grid>
 
 
 
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>1.</Typography></div>
+                            <Grid item xs={3} md={1} id="edit-numbering">
+                                <div className="item-number"><Typography variant="h2" style={{fontSize: 40}}>1.</Typography></div>
                             </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
+                            <Grid item xs={3} md={11} id = "edit-items">
+                                <div>
                                     <TextField 
                                     name="item-name1-textfield"
                                     id="item-name1-textfield"
                                     required
-                                    style={{width: 1200}} 
+                                    style={{width: "100%",background:"rgb(233, 193, 16)"}} 
                                     defaultValue={store.currentList.items[0]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
+                                    inputProps={{style: {fontSize: 11}}}/>
                                 </div>
                             </Grid>
 
 
 
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>2.</Typography></div>
+                            <Grid item xs={3} md={1} id="edit-numbering">
+                                <div className="item-number"><Typography variant="h2" style={{fontSize: 40}}>2.</Typography></div>
                             </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
+                            <Grid item xs={3} md={11} id = "edit-items">
+                                <div>
                                     <TextField 
                                     name="item-name2-textfield"
                                     id="item-name2-textfield"
                                     required
-                                    style={{width: 1200}} 
+                                    style={{width: "100%",background:"rgb(233, 193, 16)"}} 
                                     defaultValue={store.currentList.items[1]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
+                                    inputProps={{style: {fontSize: 11}}}/>
                                 </div>
                             </Grid>
 
 
 
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>3.</Typography></div>
+                            <Grid item xs={3} md={1} id="edit-numbering">
+                                <div className="item-number"><Typography variant="h2" style={{fontSize: 40}}>3.</Typography></div>
                             </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
+                            <Grid item xs={3} md={11} id = "edit-items">
+                                <div>
                                     <TextField 
                                     name="item-name3-textfield"
                                     id="item-name3-textfield"
                                     required
-                                    style={{width: 1200}} 
+                                    style={{width: "100%",background:"rgb(233, 193, 16)"}} 
                                     defaultValue={store.currentList.items[2]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
+                                    inputProps={{style: {fontSize: 11}}}/>
                                 </div>
                             </Grid>
 
 
 
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>4.</Typography></div>
+                            <Grid item xs={3} md={1} id="edit-numbering">
+                                <div className="item-number"><Typography variant="h2" style={{fontSize: 40}}>4.</Typography></div>
                             </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
+                            <Grid item xs={3} md={11} id = "edit-items">
+                                <div>
                                     <TextField 
                                     name="item-name4-textfield"
                                     id="item-name4-textfield"
                                     required
-                                    style={{width: 1200}} 
+                                    style={{width: "100%",background:"rgb(233, 193, 16)"}} 
                                     defaultValue={store.currentList.items[3]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
+                                    inputProps={{style: {fontSize: 11}}}/>
                                 </div>
                             </Grid>
 
 
-                            <Grid item xs={3} md={1}>
-                                <div className="item-number-border"><Typography variant="h2" style={{fontSize: 57}}>5.</Typography></div>
+                            <Grid item xs={3} md={1} id="edit-numbering">
+                                <div className="item-number"><Typography variant="h2" style={{fontSize: 40}}>5.</Typography></div>
                             </Grid>
-                            <Grid item xs={3} md={11}>
-                                <div className="item-number-corresponding-item">
+                            <Grid item xs={3} md={11} id = "edit-items">
+                                <div>
                                     <TextField 
                                     name="item-name5-textfield"
                                     id="item-name5-textfield"
                                     required
-                                    style={{width: 1200}} 
+                                    style={{width: "100%",background:"rgb(233, 193, 16)"}} 
                                     defaultValue={store.currentList.items[4]} 
-                                    inputProps={{style: {fontSize: 22}}}/>
+                                    inputProps={{style: {fontSize: 11}}}/>
                                 </div>
                             </Grid>
 
