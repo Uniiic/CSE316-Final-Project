@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -12,6 +12,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material'
+import Comment from './Comment';
+import List from '@mui/material/List';
+
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -120,6 +123,40 @@ function ListCard(props) {
         </div>
 
 
+    let comments = 
+        <div id = 'comment-list'>
+            <List sx={{ width: '90%', left: '5%' }}>
+            {
+                idNamePair.comments.map((pair) => (
+                    <Comment
+                        key={pair._id}
+                        idNamePair={pair}
+                    />
+                ))
+            }
+            </List>
+        </div>
+
+
+    let showComments =
+        <div>
+            <div>
+                {comments}
+            </div>
+
+            <div style={{fontSize:'30pt'}}>
+                <TextField
+                    id = 'add-comment'
+                    placeholder="Add Comment"
+                    style={{
+                        fontSize: '20pt',
+                        width: '90%',
+                        position: "relative",
+                        left: "5%",
+                    }}
+                />
+            </div>
+        </div>
 
 
 
@@ -265,7 +302,7 @@ function ListCard(props) {
         </Grid>
 
         <Grid xs={3} md={6} style={{fontSize:'80pt'}}>
-         
+            {showComments}
         </Grid>
 
 {/*  */}

@@ -150,6 +150,7 @@ getTop5ListPairs = async (req, res) => {
                     viewNumber: list.viewNumber,
                     likeNumber: list.likeNumber,
                     dislikeNumber: list.dislikeNumber,
+                    comments: list.comments,
                     published: list.published,
                     publishDate: list.publishDate,
                     publishDateString: list.publishDateString,
