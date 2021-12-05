@@ -218,6 +218,41 @@ function GlobalStoreContextProvider(props) {
     }
 
 
+
+    store.addNewComment = async function (id,author,text) {
+        let response = await api.getTop5ListById(id);
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+            let comments = top5List.comments;
+            let array = [author,text];
+            comments.splice(0,0,array);
+            top5List.comments = comments;
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    async function getListPairs(top5List) {
+                        response = await api.getTop5ListPairs();
+                        if (response.data.success) {
+                            let pairsArray = response.data.idNamePairs;
+                            storeReducer({
+                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                payload: {
+                                    idNamePairs: pairsArray,
+                                    top5List: top5List
+                                }
+                            });
+                        }
+                    }
+                    getListPairs(top5List);
+                }
+            }
+            updateList(top5List);
+        }
+        console.log(store);
+    }
+
+
+
     store.likeListButton = async function (id, both, like, dislike) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {

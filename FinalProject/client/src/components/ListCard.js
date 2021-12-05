@@ -157,6 +157,12 @@ function ListCard(props) {
                         position: "relative",
                         left: "5%",
                     }}
+                    onKeyPress={(e)=>{if(e.key==="Enter" && e.target.value != ""){
+                                store.addNewComment(idNamePair._id, auth.user.firstName+" "+auth.user.lastName ,e.target.value);
+                                e.target.value = "";
+                            }
+                        }
+                    }
                 />
             </div>
         </div>
