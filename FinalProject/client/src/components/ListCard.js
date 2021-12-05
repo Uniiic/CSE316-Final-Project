@@ -24,6 +24,7 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair } = props;
+    const [expandActive, setexpandActive] = useState(false);
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
@@ -57,14 +58,16 @@ function ListCard(props) {
             toggleEdit();
         }
     }
+
     function handleUpdateText(event) {
         setText(event.target.value);
     }
 
+
     let listCardBackgroundColor = idNamePair.published ? '#d4d4f5' : '#fffff1'
 
     let editButton = 
-    <div xs={3} md={0.5} style={{fontSize:'20pt',height:30,color:"red",textDecoration:"underline",cursor:"grab"}}
+    <div xs={3} md={0.5} style={{fontSize:'12pt',color:"red",textDecoration:"underline",cursor:"grab"}}
           button onClick={(event) => {handleLoadList(event, idNamePair._id)}}>
       Edit
     </div>
@@ -76,6 +79,51 @@ function ListCard(props) {
         </div>
     }
 
+    function handleExpand(event) {
+        setexpandActive(true);
+        store.changeViewNumber(idNamePair._id);
+    }
+
+    function handleNotExpand(event) {
+        setexpandActive(false);
+    }
+
+
+    let expandOrNotIcon = 
+        <div>
+            <IconButton>
+                <ExpandMoreIcon style={{fontSize:'25pt'}}
+                                viewBox='0 0 24 24' 
+                                onClick={handleExpand}/>
+            </IconButton>
+        </div>
+
+    if(expandActive){
+        expandOrNotIcon = 
+        <div>
+            <IconButton>
+                <ExpandLessIcon style={{fontSize:'25pt'}}
+                                viewBox='0 0 24 24' 
+                                onClick={handleNotExpand}/>
+            </IconButton>
+        </div>
+    }
+
+
+    let showCardContent = 
+        <div id = "showCardContent-section">
+            <div className="showCardContent-item">1.{idNamePair.items[0]}</div>
+            <div className="showCardContent-item">2.{idNamePair.items[1]}</div>
+            <div className="showCardContent-item">3.{idNamePair.items[2]}</div>
+            <div className="showCardContent-item">4.{idNamePair.items[3]}</div>
+            <div className="showCardContent-item">5.{idNamePair.items[4]}</div>
+        </div>
+
+
+
+
+
+
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -84,43 +132,46 @@ function ListCard(props) {
             style={{
                 fontSize: '20pt',
                 width: '100%',
+                borderStyle:"solid",
+                borderColor:"grey",
+                borderWidth:'1px',
                 backgroundColor: listCardBackgroundColor
             }}
         >
 
-        <Grid container style={{height:135}}>
+        <Grid container>
 
-        <Grid xs={3} md={7} style={{fontSize:'28pt'}}>
+        <Grid xs={3} md={7} style={{fontSize:'20pt'}}>
           {idNamePair.name}
         </Grid>
 
         <Grid xs={3} md={2}>
           <IconButton>
-                <ThumbUpIcon style={{fontSize:'37pt'}} />
+                <ThumbUpIcon style={{fontSize:'29pt'}} />
           </IconButton>
-          #
+          {idNamePair.likeNumber}
         </Grid>
 
         <Grid xs={3} md={2}>
           <IconButton>
-                <ThumbDownIcon style={{fontSize:'37pt'}} />
+                <ThumbDownIcon style={{fontSize:'29pt'}} />
           </IconButton>
-          #
+          {idNamePair.dislikeNumber}
         </Grid>
 
         <Grid xs={3} md={1}>
             <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'37pt'}} />
+                        <DeleteIcon style={{fontSize:'29pt'}} />
             </IconButton>
         </Grid>
 {/*  */}
-        <Grid xs={3} md={0.5} style={{fontSize:'20pt',paddingBottom:15}}>
+        <Grid xs={3} md={0.5} style={{fontSize:'12pt'}}>
           By:
         </Grid>
 
-        <Grid xs={3} md={11.5} style={{fontSize:'20pt',paddingBottom:15,color:"blue",textDecoration:"underline"}}>
+        <Grid xs={3} md={11.5} style={{fontSize:'12pt',color:"blue",textDecoration:"underline"}}>
           {idNamePair.owner}
         </Grid>
 {/*  */}
@@ -128,27 +179,125 @@ function ListCard(props) {
           {editButton}
         </Grid>
 
-        <Grid xs={3} md={5} style={{fontSize:'20pt',height:30}}>
+        <Grid xs={3} md={5} style={{fontSize:'12pt'}}>
 
         </Grid>
 
-        <Grid xs={3} md={1} style={{fontSize:'20pt',height:30}}>
+        <Grid xs={3} md={1} style={{fontSize:'12pt'}}>
           Views:
         </Grid>
-        <Grid xs={3} md={3} style={{fontSize:'20pt',height:30,color:"red"}}>
-          #####
+        <Grid xs={3} md={3} style={{fontSize:'12pt',color:"red"}}>
+            {idNamePair.viewNumber}
         </Grid>
 
         <Grid xs={3} md={1}>
-          <IconButton>
-                <ExpandMoreIcon style={{fontSize:'45pt',height:50}}
-                                viewBox='0 7 24 24' />
-          </IconButton>
+            {expandOrNotIcon}
         </Grid>
 
       </Grid>
             
         </ListItem>
+
+
+
+
+
+
+
+
+
+
+    if(expandActive){
+        cardElement =
+        <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            sx={{ 
+                marginTop: '5px', display: 'flex', p: 1 }}
+            style={{
+                fontSize: '20pt',
+                width: '100%',
+                borderStyle:"solid",
+                borderColor:"grey",
+                borderWidth:'1px',
+                backgroundColor: listCardBackgroundColor
+            }}
+        >
+
+        <Grid container>
+
+        <Grid xs={3} md={7} style={{fontSize:'20pt'}}>
+          {idNamePair.name}
+        </Grid>
+
+        <Grid xs={3} md={2}>
+          <IconButton>
+                <ThumbUpIcon style={{fontSize:'29pt'}} />
+          </IconButton>
+          {idNamePair.likeNumber}
+        </Grid>
+
+        <Grid xs={3} md={2}>
+          <IconButton>
+                <ThumbDownIcon style={{fontSize:'29pt'}} />
+          </IconButton>
+          {idNamePair.dislikeNumber}
+        </Grid>
+
+        <Grid xs={3} md={1}>
+            <IconButton onClick={(event) => {
+                        handleDeleteList(event, idNamePair._id)
+                    }} aria-label='delete'>
+                        <DeleteIcon style={{fontSize:'29pt'}} />
+            </IconButton>
+        </Grid>
+{/*  */}
+        <Grid xs={3} md={0.5} style={{fontSize:'12pt'}}>
+          By:
+        </Grid>
+
+        <Grid xs={3} md={11.5} style={{fontSize:'12pt',color:"blue",textDecoration:"underline"}}>
+          {idNamePair.owner}
+        </Grid>
+{/*  */}
+        <Grid xs={3} md={6} style={{fontSize:'80pt'}}>
+            {showCardContent}
+        </Grid>
+
+        <Grid xs={3} md={6} style={{fontSize:'80pt'}}>
+         
+        </Grid>
+
+{/*  */}
+        <Grid xs={3} md={2}>
+          {editButton}
+        </Grid>
+
+        <Grid xs={3} md={5} style={{fontSize:'12pt'}}>
+
+        </Grid>
+
+        <Grid xs={3} md={1} style={{fontSize:'12pt'}}>
+          Views:
+        </Grid>
+        <Grid xs={3} md={3} style={{fontSize:'12pt',color:"red"}}>
+            {idNamePair.viewNumber}
+        </Grid>
+
+        <Grid xs={3} md={1}>
+          {expandOrNotIcon}
+        </Grid>
+
+      </Grid>
+            
+        </ListItem>
+    }
+
+
+
+
+
+
 
 
     if (editActive) {
