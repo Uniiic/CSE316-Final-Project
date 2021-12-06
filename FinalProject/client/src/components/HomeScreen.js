@@ -14,7 +14,6 @@ import EditToolbar from './EditToolbar';
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
-    const [ homeIcon,setHomeIcon ] = useState(false);
 
     useEffect(() => {
         store.loadIdNamePairs();
@@ -24,11 +23,6 @@ const HomeScreen = () => {
 
     function handleCreateNewList() {
         store.createNewList();
-    }
-
-    function handleHomeIconSearching(textValue) {
-        // setHomeIcon(true);
-        // console.log(homeIcon);
     }
 
 
@@ -47,26 +41,7 @@ const HomeScreen = () => {
             }
             </List>;
 
-    }else if(homeIcon){
-        listCard = 
-        <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
-        {
-            store.idNamePairs.map((pair) => (
-                <ListCard
-                    setHomeIcon={setHomeIcon()}
-                    handleHomeIconSearching={handleHomeIconSearching()}
-                    key={pair._id}
-                    idNamePair={pair}
-                    selected={false}
-                />
-            ))
-        }
-        </List>;
     }
-
-
-
-
 
 
 
@@ -77,7 +52,6 @@ const HomeScreen = () => {
         <div id="top5-list-selector">
             <div id="list-selector-heading">
             <EditToolbar
-            
             />
             </div>
             <div id="list-selector-list">

@@ -204,9 +204,6 @@ function ListCard(props) {
             document.getElementById("ThumbDownIcon").style.color = "red";
             document.getElementById("ThumbUpIcon").style.color = "grey";
         }
-        console.log(both);
-        console.log(dislikeAlready);
-        console.log(likeAlready);
         store.dislikeListButton(idNamePair._id , both, dislikeAlready, likeAlready);
     }
 
@@ -254,9 +251,12 @@ function ListCard(props) {
 
         <Grid xs={3} md={1}>
             <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'29pt'}} />
+                            handleDeleteList(event, idNamePair._id)
+                        }} 
+                        aria-label='delete'
+                        // style =  { (auth.pageName>1) ? {display:"block",disabled:"false"} : {display:"none",disabled:"true"}}
+                        style =  {{display:"inline",disabled:"false"}}>
+                        <DeleteIcon style =  {{fontSize:'29pt'}}/>
             </IconButton>
         </Grid>
 {/*  */}

@@ -39,6 +39,10 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         itemActive: false,
         listMarkedForDeletion: null,
+        homeIcon: false,
+        allListIcon: false,
+        UserButtonIcon: false,
+        CommunityListIcon: false,
     });
     const history = useHistory();
 
@@ -250,7 +254,6 @@ function GlobalStoreContextProvider(props) {
         }
         console.log(store);
     }
-
 
 
     store.likeListButton = async function (id, both, like, dislike) {
@@ -488,33 +491,6 @@ function GlobalStoreContextProvider(props) {
                 history.push("/top5list/" + top5List._id);
             }
         }
-    }
-
-    store.moveItem = function (start, end) {
-        start -= 1;
-        end -= 1;
-        if (start < end) {
-            let temp = store.currentList.items[start];
-            for (let i = start; i < end; i++) {
-                store.currentList.items[i] = store.currentList.items[i + 1];
-            }
-            store.currentList.items[end] = temp;
-        }
-        else if (start > end) {
-            let temp = store.currentList.items[start];
-            for (let i = start; i > end; i--) {
-                store.currentList.items[i] = store.currentList.items[i - 1];
-            }
-            store.currentList.items[end] = temp;
-        }
-
-        // NOW MAKE IT OFFICIAL
-        store.updateCurrentList();
-    }
-
-    store.updateItem = function (index, newItem) {
-        store.currentList.items[index] = newItem;
-        store.updateCurrentList();
     }
 
     store.updateCurrentList = async function () {

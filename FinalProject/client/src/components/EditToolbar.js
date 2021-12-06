@@ -11,7 +11,7 @@ import SortIcon from '@mui/icons-material/Sort';
 import { Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-
+import AuthContext from '../auth'
 /*
     This toolbar is a functional React component that
     manages the undo/redo/close buttons.
@@ -22,7 +22,7 @@ function EditToolbar(props) {
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
-    const { handleHomeIconSearching } = props;
+    const { auth } = useContext(AuthContext);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -58,9 +58,36 @@ function EditToolbar(props) {
         <MenuItem onClick={handleMenuClose}>Dislikes</MenuItem>   
     </Menu>
 
-    // function handleHomeIconSeaching(){
-    //     handleHomeIconSearching(document.getElementById("search-bar").value);
-    // }
+
+
+
+    function handleHomeIconSeaching(){
+        let text = document.getElementById("search-bar").value;
+        // console.log(text);
+        auth.pageNumber = 1;
+        console.log(auth.pageNumber);
+    }
+
+    function handleGroupsIconSeaching(){
+        let text = document.getElementById("search-bar").value;
+        // console.log(text);
+        auth.pageNumber = 2;
+        console.log(auth.pageNumber);
+    }
+
+    function handlePersonIconSeaching(){
+        let text = document.getElementById("search-bar").value;
+        // console.log(text);
+        auth.pageNumber = 3;
+        console.log(auth.pageNumber);
+    }
+
+    function handleCommunityIconSeaching(){
+        let text = document.getElementById("search-bar").value;
+        // console.log(text);
+        auth.pageNumber = 4;
+        console.log(auth.pageNumber);
+    }
 
     return (
         <div>
@@ -70,7 +97,7 @@ function EditToolbar(props) {
                 id="home-button"
                 >
                     <HomeIcon 
-                        // onClick={handleHomeIconSeaching}
+                        onClick={handleHomeIconSeaching}
                         style={{fontSize:50}}
                     />
                 </Button>
@@ -79,7 +106,7 @@ function EditToolbar(props) {
                 id="groups-button"
                 >
                     <GroupsIcon 
-        
+                        onClick={handleGroupsIconSeaching}
                         style={{fontSize:50}}
                     />
                 </Button>
@@ -88,7 +115,7 @@ function EditToolbar(props) {
                 id="person-button"
                 >
                     <PersonIcon 
-                    
+                        onClick={handlePersonIconSeaching}
                         style={{fontSize:50}}
                     />
                 </Button>
@@ -97,7 +124,7 @@ function EditToolbar(props) {
                 id="functions-button"
                 >
                     <FunctionsIcon 
-                       
+                        onClick={handleCommunityIconSeaching}
                         style={{fontSize:50}}
                     />
                 </Button>
