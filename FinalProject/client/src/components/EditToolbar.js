@@ -62,8 +62,8 @@ function EditToolbar(props) {
 
 
     function handleHomeIconSeaching(){
-        // let text = document.getElementById("search-bar").value;
-        // console.log(text);
+        let text = document.getElementById("search-bar").value.toLowerCase();
+
         auth.HomeIcon(store);
     }
 
