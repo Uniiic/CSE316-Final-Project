@@ -30,7 +30,7 @@ export default function RegisterScreen() {
             password: formData.get('password'),
             passwordVerify: formData.get('passwordVerify')
         }, store);
-        store.loadIdNamePairs("text","home");
+        store.loadIdNamePairs();
     };
 
     return (

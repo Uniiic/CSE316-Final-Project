@@ -16,7 +16,7 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
 
     useEffect(() => {
-        store.loadIdNamePairs("text","home");
+        store.loadIdNamePairs();
     }, []);
 
 

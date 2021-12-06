@@ -64,35 +64,39 @@ function EditToolbar(props) {
 
     function handleHomeIconSeaching(){
         let text = document.getElementById("search-bar").value.toLowerCase();
-        store.loadIdNamePairs(text,"home");
+        store.loadIdNamePairs();
+        // store.loadIdNamePairs(text,"home");
     }
 
     function handleGroupsIconSeaching(){
         let text = document.getElementById("search-bar").value.toLowerCase();
-        store.loadIdNamePairs(text,"group");
+        store.editToolLoadIdNamePairs();
+        // store.loadIdNamePairs(text,"group");
     }
 
-    function handlePersonIconSeaching(){
-        store.loadIdNamePairs("","person");
-    }
+    // function handlePersonIconSeaching(){
+    //     store.setCurrentPage_Person("");
+    //     // store.loadIdNamePairs("","person");
+    // }
 
-    function handleCommunityIconSeaching(){
-        let text = document.getElementById("search-bar").value;
-        store.loadIdNamePairs(text,"community");
-    }
+    // function handleCommunityIconSeaching(){
+    //     let text = document.getElementById("search-bar").value;
+    //     store.setCurrentPage_Community(text);
+    //     // store.loadIdNamePairs(text,"community");
+    // }
 
-    function handleSearch(text){
-        console.log(store.currentPage);
-        if(store.currentPage==="home"){
-            store.loadIdNamePairs(text,"home");
-        }else if(store.currentPage==="group"){
-            store.loadIdNamePairs(text,"group");
-        }else if(store.currentPage==="person"){
-            store.loadIdNamePairs(text,"person");
-        }else if(store.currentPage==="community"){
-            store.loadIdNamePairs(text,"community");
-        }
-    }
+    // function handleSearch(text){
+    //     console.log(store.currentPage);
+    //     if(store.currentPage==="home"){
+    //         store.loadIdNamePairs(text,"home");
+    //     }else if(store.currentPage==="group"){
+    //         store.loadIdNamePairs(text,"group");
+    //     }else if(store.currentPage==="person"){
+    //         store.loadIdNamePairs(text,"person");
+    //     }else if(store.currentPage==="community"){
+    //         store.loadIdNamePairs(text,"community");
+    //     }
+    // }
 
     return (
         <div>
@@ -120,8 +124,8 @@ function EditToolbar(props) {
                 id="person-button"
                 >
                     <PersonIcon 
-                        onClick={handlePersonIconSeaching}
-                        style={(store.currentPage=== "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        // onClick={handlePersonIconSeaching}
+                        // style={(store.currentPage=== "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -129,8 +133,8 @@ function EditToolbar(props) {
                 id="functions-button"
                 >
                     <FunctionsIcon 
-                        onClick={handleCommunityIconSeaching}
-                        style={(store.currentPage === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        // onClick={handleCommunityIconSeaching}
+                        // style={(store.currentPage === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -139,12 +143,12 @@ function EditToolbar(props) {
                     id="search-bar"
                     style={{width:300}}
                     placeholder = 'Search'
-                    onKeyPress={(e)=>{if(e.key==="Enter" && e.target.value != ""){
-                        handleSearch(e.target.value.toLowerCase());
-                        e.target.value = "";
-                                    }
-                            }
-                        }
+                    // onKeyPress={(e)=>{if(e.key==="Enter" && e.target.value != ""){
+                    //     handleSearch(e.target.value.toLowerCase());
+                    //     e.target.value = "";
+                    //                 }
+                    //         }
+                    //     }
                     />
                 </div>
 

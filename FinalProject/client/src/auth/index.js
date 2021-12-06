@@ -137,7 +137,7 @@ function AuthContextProvider(props) {
                 });
                 history.push("/");
 
-                store.loadIdNamePairs("text","home");
+                store.loadIdNamePairs();
             }
         }catch (err){
             authReducer({
@@ -161,7 +161,7 @@ function AuthContextProvider(props) {
                     }
                 })
                 history.push("/");
-                store.loadIdNamePairs("text","home");
+                store.loadIdNamePairs();
             }
         }catch (err){
             authReducer({

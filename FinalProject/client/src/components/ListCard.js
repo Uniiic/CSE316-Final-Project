@@ -176,14 +176,14 @@ function ListCard(props) {
 
         if(idNamePair.likeList.indexOf(auth.user.email) < 0 && idNamePair.dislikeList.indexOf(auth.user.email) < 0){
             both = true;
-            document.getElementById("ThumbUpIcon").style.color = "red";
+            document.getElementById("ThumbUpIcon"+idNamePair._id).style.color = "red";
         }else if(idNamePair.likeList.indexOf(auth.user.email) >= 0 && idNamePair.dislikeList.indexOf(auth.user.email) < 0){
             likeAlready = true;
-            document.getElementById("ThumbUpIcon").style.color = "grey";
+            document.getElementById("ThumbUpIcon"+idNamePair._id).style.color = "grey";
         }else{
             dislikeAlready = true;
-            document.getElementById("ThumbUpIcon").style.color = "red";
-            document.getElementById("ThumbDownIcon").style.color = "grey";
+            document.getElementById("ThumbUpIcon"+idNamePair._id).style.color = "red";
+            document.getElementById("ThumbDownIcon"+idNamePair._id).style.color = "grey";
         }
         store.likeListButton(idNamePair._id , both, likeAlready, dislikeAlready);
     }
@@ -195,14 +195,14 @@ function ListCard(props) {
 
         if(idNamePair.likeList.indexOf(auth.user.email) < 0 && idNamePair.dislikeList.indexOf(auth.user.email) < 0){
             both = true;
-            document.getElementById("ThumbDownIcon").style.color = "red";
+            document.getElementById("ThumbDownIcon"+idNamePair._id).style.color = "red";
         }else if(idNamePair.likeList.indexOf(auth.user.email) < 0 && idNamePair.dislikeList.indexOf(auth.user.email) >= 0){
             dislikeAlready = true;
-            document.getElementById("ThumbDownIcon").style.color = "grey";
+            document.getElementById("ThumbDownIcon"+idNamePair._id).style.color = "grey";
         }else{
             likeAlready = true;
-            document.getElementById("ThumbDownIcon").style.color = "red";
-            document.getElementById("ThumbUpIcon").style.color = "grey";
+            document.getElementById("ThumbDownIcon"+idNamePair._id).style.color = "red";
+            document.getElementById("ThumbUpIcon"+idNamePair._id).style.color = "grey";
         }
         store.dislikeListButton(idNamePair._id , both, dislikeAlready, likeAlready);
     }
@@ -237,14 +237,14 @@ function ListCard(props) {
 
         <Grid xs={3} md={2}>
           <IconButton>
-                <ThumbUpIcon id = "ThumbUpIcon"style={{fontSize:'29pt'}} onClick={handleAddLike} />
+                <ThumbUpIcon id = {"ThumbUpIcon"+idNamePair._id} style={{fontSize:'29pt'}} onClick={handleAddLike} />
           </IconButton>
           {idNamePair.likeNumber}
         </Grid>
 
         <Grid xs={3} md={2}>
           <IconButton>
-                <ThumbDownIcon id = "ThumbDownIcon" style={{fontSize:'29pt'}} onClick={handleAddDislike}/>
+                <ThumbDownIcon id = {"ThumbDownIcon"+idNamePair._id} style={{fontSize:'29pt'}} onClick={handleAddDislike}/>
           </IconButton>
           {idNamePair.dislikeNumber}
         </Grid>
