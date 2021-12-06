@@ -254,9 +254,8 @@ function ListCard(props) {
                             handleDeleteList(event, idNamePair._id)
                         }} 
                         aria-label='delete'
-                        // style =  { (auth.pageName>1) ? {display:"block",disabled:"false"} : {display:"none",disabled:"true"}}
-                        style =  {{display:"inline",disabled:"false"}}>
-                        <DeleteIcon style =  {{fontSize:'29pt'}}/>
+                        style =  { (auth.page === "home") ? {display:"block",disabled:"false"} : {display:"none",disabled:"true"}}>
+                        <DeleteIcon style =  {{fontSize:'25pt'}}/>
             </IconButton>
         </Grid>
 {/*  */}
@@ -339,9 +338,11 @@ function ListCard(props) {
 
         <Grid xs={3} md={1}>
             <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'29pt'}} />
+                            handleDeleteList(event, idNamePair._id)
+                        }} 
+                        aria-label='delete'
+                        style =  { (auth.page === "home") ? {display:"block",disabled:"false"} : {display:"none",disabled:"true"}}>
+                        <DeleteIcon style={{fontSize:'25pt'}} />
             </IconButton>
         </Grid>
 {/*  */}

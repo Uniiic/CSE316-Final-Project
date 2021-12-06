@@ -62,31 +62,27 @@ function EditToolbar(props) {
 
 
     function handleHomeIconSeaching(){
-        let text = document.getElementById("search-bar").value;
+        // let text = document.getElementById("search-bar").value;
         // console.log(text);
-        auth.pageNumber = 1;
-        console.log(auth.pageNumber);
+        auth.HomeIcon(store);
     }
 
     function handleGroupsIconSeaching(){
-        let text = document.getElementById("search-bar").value;
+        // let text = document.getElementById("search-bar").value;
         // console.log(text);
-        auth.pageNumber = 2;
-        console.log(auth.pageNumber);
+        auth.GroupIcon(store);
     }
 
     function handlePersonIconSeaching(){
-        let text = document.getElementById("search-bar").value;
+        // let text = document.getElementById("search-bar").value;
         // console.log(text);
-        auth.pageNumber = 3;
-        console.log(auth.pageNumber);
+        auth.PersonIcon(store);
     }
 
     function handleCommunityIconSeaching(){
-        let text = document.getElementById("search-bar").value;
+        // let text = document.getElementById("search-bar").value;
         // console.log(text);
-        auth.pageNumber = 4;
-        console.log(auth.pageNumber);
+        auth.CommunityIcon(store);
     }
 
     return (
@@ -98,7 +94,7 @@ function EditToolbar(props) {
                 >
                     <HomeIcon 
                         onClick={handleHomeIconSeaching}
-                        style={{fontSize:50}}
+                        style={(auth.page === "home")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -107,7 +103,7 @@ function EditToolbar(props) {
                 >
                     <GroupsIcon 
                         onClick={handleGroupsIconSeaching}
-                        style={{fontSize:50}}
+                        style={(auth.page === "group")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -116,7 +112,7 @@ function EditToolbar(props) {
                 >
                     <PersonIcon 
                         onClick={handlePersonIconSeaching}
-                        style={{fontSize:50}}
+                        style={(auth.page === "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -125,7 +121,7 @@ function EditToolbar(props) {
                 >
                     <FunctionsIcon 
                         onClick={handleCommunityIconSeaching}
-                        style={{fontSize:50}}
+                        style={(auth.page === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 

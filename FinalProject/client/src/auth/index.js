@@ -12,7 +12,11 @@ export const AuthActionType = {
     LOGIN_USER: "LOGIN_USER",
     ERROR_MODAL: "ERROR_MODAL",
     ERROR_MODAL_INVISIBLE: "ERROR_MODAL_INVISIBLE",
-    LOGOUT_USER: "LOGOUT_USER"
+    LOGOUT_USER: "LOGOUT_USER",
+    HOME_ICON:"HOME_ICON",
+    GROUP_ICON:"GROUP_ICON",
+    PERSON_ICON:"PERSON_ICON",
+    COMMUNITY_ICON:"COMMUNITY_ICON"
 }
 
 function AuthContextProvider(props) {
@@ -20,7 +24,8 @@ function AuthContextProvider(props) {
         user: null,
         loggedIn: false,
         error: false,
-        msg: null
+        msg: null,
+        page: ""
     });
     const history = useHistory();
 
@@ -36,7 +41,8 @@ function AuthContextProvider(props) {
                     user: payload.user,
                     loggedIn: payload.loggedIn,
                     error: false,
-                    msg: null
+                    msg: null,
+                    page: ""
                 });
             }
             case AuthActionType.REGISTER_USER: {
@@ -44,7 +50,8 @@ function AuthContextProvider(props) {
                     user: payload.user,
                     loggedIn: true,
                     error: false,
-                    msg: null
+                    msg: null,
+                    page: ""
                 })
             }
             case AuthActionType.LOGIN_USER: {
@@ -52,7 +59,8 @@ function AuthContextProvider(props) {
                     user: payload.user,
                     loggedIn: true,
                     error: false,
-                    msg: null
+                    msg: null,
+                    page: "home"
                 })
             }
             case AuthActionType.ERROR_MODAL: {
@@ -60,7 +68,8 @@ function AuthContextProvider(props) {
                     user: null,
                     loggedIn: false,
                     error: payload.error,
-                    msg: payload.msg
+                    msg: payload.msg,
+                    page: ""
                 })
             }
             case AuthActionType.ERROR_MODAL_INVISIBLE: {
@@ -68,7 +77,8 @@ function AuthContextProvider(props) {
                     user: null,
                     loggedIn: false,
                     error: payload.error,
-                    msg: payload.msg
+                    msg: payload.msg,
+                    page: ""
                 })
             }
             case AuthActionType.LOGOUT_USER: {
@@ -76,8 +86,45 @@ function AuthContextProvider(props) {
                     user: null,
                     loggedIn: false,
                     error: payload.error,
-                    msg: payload.msg
+                    msg: payload.msg,
+                    page: ""
                 })
+            }
+            case AuthActionType.HOME_ICON: {
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: auth.loggedIn,
+                    error: auth.error,
+                    msg: auth.msg,
+                    page: "home"
+                });
+            }
+            case AuthActionType.GROUP_ICON: {
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: auth.loggedIn,
+                    error: auth.error,
+                    msg: auth.msg,
+                    page: "group"
+                });
+            }
+            case AuthActionType.PERSON_ICON: {
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: auth.loggedIn,
+                    error: auth.error,
+                    msg: auth.msg,
+                    page: "person"
+                });
+            }
+            case AuthActionType.COMMUNITY_ICON: {
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: auth.loggedIn,
+                    error: auth.error,
+                    msg: auth.msg,
+                    page: "community"
+                });
             }
             default:
                 return auth;
@@ -171,6 +218,50 @@ function AuthContextProvider(props) {
                 }
             });
         }
+    }
+
+    auth.HomeIcon = async function(store) {
+        authReducer({
+            type: AuthActionType.HOME_ICON,
+            payload: {
+                page:"home"
+            }
+        })
+        history.push("/");
+        store.loadIdNamePairs();
+    }
+
+    auth.GroupIcon = async function(store) {
+        authReducer({
+            type: AuthActionType.GROUP_ICON,
+            payload: {
+                page:"group"
+            }
+        })
+        history.push("/");
+        store.loadIdNamePairs();
+    }
+
+    auth.PersonIcon = async function(store) {
+        authReducer({
+            type: AuthActionType.PERSON_ICON,
+            payload: {
+                page:"person"
+            }
+        })
+        history.push("/");
+        store.loadIdNamePairs();
+    }
+
+    auth.CommunityIcon = async function(store) {
+        authReducer({
+            type: AuthActionType.COMMUNITY_ICON,
+            payload: {
+                page:"community"
+            }
+        })
+        history.push("/");
+        store.loadIdNamePairs();
     }
 
     return (
