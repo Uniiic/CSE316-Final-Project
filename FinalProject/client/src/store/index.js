@@ -25,7 +25,11 @@ export const GlobalStoreActionType = {
     UNMARK_LIST_FOR_DELETION: "UNMARK_LIST_FOR_DELETION",
     SET_CURRENT_LIST: "SET_CURRENT_LIST",
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
-    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE"
+    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
+    SET_CURRENT_PAGE_HOME: "SET_CURRENT_PAGE_HOME",
+    SET_CURRENT_PAGE_GROUP: "SET_CURRENT_PAGE_GROUP",
+    SET_CURRENT_PAGE_PERSON: "SET_CURRENT_PAGE_PERSON",
+    SET_CURRENT_PAGE_COMMUNITY: "SET_CURRENT_PAGE_COMMUNITY"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -41,10 +45,7 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         itemActive: false,
         listMarkedForDeletion: null,
-        homeIcon: false,
-        allListIcon: false,
-        UserButtonIcon: false,
-        CommunityListIcon: false,
+        currentPage: ""
     });
     const history = useHistory();
 
@@ -64,7 +65,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -75,8 +77,9 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
-                })
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
+                });
             }
             // CREATE A NEW LIST
             case GlobalStoreActionType.CREATE_NEW_LIST: {
@@ -86,8 +89,9 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter + 1,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
-                })
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
+                });
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
             case GlobalStoreActionType.LOAD_ID_NAME_PAIRS: {
@@ -97,7 +101,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -108,7 +113,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: payload
+                    listMarkedForDeletion: payload,
+                    currentPage: store.currentPage
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -119,7 +125,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
                 });
             }
             // UPDATE A LIST
@@ -130,7 +137,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
                 });
             }
             // START EDITING A LIST ITEM
@@ -141,7 +149,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: true,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
                 });
             }
             // START EDITING A LIST NAME
@@ -152,7 +161,52 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: true,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    currentPage: store.currentPage
+                });
+            }
+            case GlobalStoreActionType.SET_CURRENT_PAGE_HOME: {
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    currentPage: "home"
+                });
+            }
+            case GlobalStoreActionType.SET_CURRENT_PAGE_GROUP: {
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    currentPage: "group"
+                });
+            }
+            case GlobalStoreActionType.SET_CURRENT_PAGE_PERSON: {
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    currentPage: "person"
+                });
+            }
+            case GlobalStoreActionType.SET_CURRENT_PAGE_COMMUNITY: {
+                return setStore({
+                    idNamePairs: payload,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    currentPage: "community"
                 });
             }
             default:
@@ -399,7 +453,7 @@ function GlobalStoreContextProvider(props) {
             viewNumber: 0,
             likeNumber: 0,
             dislikeNumber: 0,
-            comments: [["tcl","1123"],["cyn","123413"],["dasda","dsacds123"]],
+            comments: [],
             published: false,
             publishDate: new Date(),
             publishDateString: ""
@@ -426,18 +480,60 @@ function GlobalStoreContextProvider(props) {
     }
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
-    store.loadIdNamePairs = async function () {
-        const response = await api.getTop5ListPairs();
-        if (response.data.success) {
-            let pairsArray = response.data.idNamePairs;
-            storeReducer({
-                type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                payload: pairsArray
-            });
+    store.loadIdNamePairs = async function (text,page) {
+        if(page === "home"){
+            const response = await api.getTop5ListPairs();
+            if (response.data.success) {
+                let pairsArray = response.data.idNamePairs;
+                pairsArray = pairsArray.filter(list => list.ownerEmail === auth.user.email);
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_PAGE_HOME,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
+        }else if(page === "group"){
+            const response = await api.getTop5ListPairs();
+            if (response.data.success) {
+                let pairsArray = response.data.idNamePairs;
+                pairsArray = pairsArray.filter(list => list.published === true && list.name.toLowerCase().startsWith(text));
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_PAGE_GROUP,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
+        }else if(page === "person"){
+            const response = await api.getTop5ListPairs();
+            if (response.data.success) {
+                let pairsArray = response.data.idNamePairs;
+                pairsArray = pairsArray.filter(list => list.published === true && list.owner === text);
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_PAGE_PERSON,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
+        }else if(page === "community"){
+            const response = await api.getTop5ListPairs();
+            if (response.data.success) {
+                let pairsArray = response.data.idNamePairs;
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_PAGE_COMMUNITY,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
         }
-        else {
-            console.log("API FAILED TO GET THE LIST PAIRS");
-        }
+        
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
@@ -459,7 +555,7 @@ function GlobalStoreContextProvider(props) {
     store.deleteList = async function (listToDelete) {
         let response = await api.deleteTop5ListById(listToDelete._id);
         if (response.data.success) {
-            store.loadIdNamePairs();
+            store.loadIdNamePairs("text","home");
             history.push("/");
         }
     }
@@ -555,6 +651,39 @@ function GlobalStoreContextProvider(props) {
         store.updateCurrentList();
         store.closeCurrentList();
     }
+
+
+    store.setCurrentPage_Home = function () {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_PAGE_HOME,
+            payload: null
+        });
+    }
+
+    store.setCurrentPage_Group = function () {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_PAGE_GROUP,
+            payload: null
+        });
+    }
+
+    store.setCurrentPage_Person = function () {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_PAGE_PERSON,
+            payload:null
+        });
+    }
+
+    store.setCurrentPage_Community = function () {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_PAGE_COMMUNITY,
+            payload: null
+        });
+    }
+
+
+
+
 
 
 

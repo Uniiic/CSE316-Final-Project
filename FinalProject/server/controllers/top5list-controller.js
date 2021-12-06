@@ -64,6 +64,7 @@ updateTop5List = async (req, res) => {
         top5List.likeList = body.likeList
         top5List.dislikeList = body.dislikeList
         top5List.comments = body.comments
+        top5List.ownerEmail = body.ownerEmail
         top5List
             .save()
             .then(() => {
@@ -105,11 +106,11 @@ getTop5ListById = async (req, res) => {
             if(err){
                 return res.status(400).json({success:false, error: err})
             }
-            if(loggedInUser.email !== list.ownerEmail){
-                return res
-                .status(404)
-                .json({success:false,error: 'Top 5 lists not found'})
-            }
+            // if(loggedInUser.email !== list.ownerEmail){
+            //     return res
+            //     .status(404)
+            //     .json({success:false,error: 'Top 5 lists not found'})
+            // }
             return res.status(200).json({success:true,top5List:list})
         }).catch(err =>console.log(err))
     })
@@ -131,7 +132,7 @@ getTop5Lists = async (req, res) => {
 }
 getTop5ListPairs = async (req, res) => {
     const loggedInUser = await User.findOne({_id:req.userId});
-    await Top5List.find({ ownerEmail: loggedInUser.email}, (err, top5Lists) => {
+    await Top5List.find({}, (err, top5Lists) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -161,6 +162,7 @@ getTop5ListPairs = async (req, res) => {
                     published: list.published,
                     publishDate: list.publishDate,
                     publishDateString: list.publishDateString,
+                    ownerEmail: list.ownerEmail
                 };
                 pairs.push(pair);
             }

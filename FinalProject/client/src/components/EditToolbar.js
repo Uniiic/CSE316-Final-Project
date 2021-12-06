@@ -23,6 +23,7 @@ function EditToolbar(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const { auth } = useContext(AuthContext);
+    const [currentPage,setCurrentPage] = useState("");
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -63,26 +64,34 @@ function EditToolbar(props) {
 
     function handleHomeIconSeaching(){
         let text = document.getElementById("search-bar").value.toLowerCase();
-
-        auth.HomeIcon(store);
+        store.loadIdNamePairs(text,"home");
     }
 
     function handleGroupsIconSeaching(){
-        // let text = document.getElementById("search-bar").value;
-        // console.log(text);
-        auth.GroupIcon(store);
+        let text = document.getElementById("search-bar").value.toLowerCase();
+        store.loadIdNamePairs(text,"group");
     }
 
     function handlePersonIconSeaching(){
-        // let text = document.getElementById("search-bar").value;
-        // console.log(text);
-        auth.PersonIcon(store);
+        store.loadIdNamePairs("","person");
     }
 
     function handleCommunityIconSeaching(){
-        // let text = document.getElementById("search-bar").value;
-        // console.log(text);
-        auth.CommunityIcon(store);
+        let text = document.getElementById("search-bar").value;
+        store.loadIdNamePairs(text,"community");
+    }
+
+    function handleSearch(text){
+        console.log(store.currentPage);
+        if(store.currentPage==="home"){
+            store.loadIdNamePairs(text,"home");
+        }else if(store.currentPage==="group"){
+            store.loadIdNamePairs(text,"group");
+        }else if(store.currentPage==="person"){
+            store.loadIdNamePairs(text,"person");
+        }else if(store.currentPage==="community"){
+            store.loadIdNamePairs(text,"community");
+        }
     }
 
     return (
@@ -94,7 +103,7 @@ function EditToolbar(props) {
                 >
                     <HomeIcon 
                         onClick={handleHomeIconSeaching}
-                        style={(auth.page === "home")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        style={(store.currentPage === "home")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -103,7 +112,7 @@ function EditToolbar(props) {
                 >
                     <GroupsIcon 
                         onClick={handleGroupsIconSeaching}
-                        style={(auth.page === "group")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        style={(store.currentPage === "group")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -112,7 +121,7 @@ function EditToolbar(props) {
                 >
                     <PersonIcon 
                         onClick={handlePersonIconSeaching}
-                        style={(auth.page === "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        style={(store.currentPage=== "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -121,7 +130,7 @@ function EditToolbar(props) {
                 >
                     <FunctionsIcon 
                         onClick={handleCommunityIconSeaching}
-                        style={(auth.page === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        style={(store.currentPage === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -130,6 +139,12 @@ function EditToolbar(props) {
                     id="search-bar"
                     style={{width:300}}
                     placeholder = 'Search'
+                    onKeyPress={(e)=>{if(e.key==="Enter" && e.target.value != ""){
+                        handleSearch(e.target.value.toLowerCase());
+                        e.target.value = "";
+                                    }
+                            }
+                        }
                     />
                 </div>
 
