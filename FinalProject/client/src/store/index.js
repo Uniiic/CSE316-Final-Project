@@ -1,6 +1,6 @@
 
    
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import api from '../api'
 import AuthContext from '../auth'
@@ -29,7 +29,8 @@ export const GlobalStoreActionType = {
     SET_CURRENT_PAGE_HOME: "SET_CURRENT_PAGE_HOME",
     SET_CURRENT_PAGE_GROUP: "SET_CURRENT_PAGE_GROUP",
     SET_CURRENT_PAGE_PERSON: "SET_CURRENT_PAGE_PERSON",
-    SET_CURRENT_PAGE_COMMUNITY: "SET_CURRENT_PAGE_COMMUNITY"
+    SET_CURRENT_PAGE_COMMUNITY: "SET_CURRENT_PAGE_COMMUNITY",
+    SET_SEARCH_AND_SORT: "SET_SEARCH_AND_SORT"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -45,8 +46,11 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         itemActive: false,
         listMarkedForDeletion: null,
-        currentPage: ""
+        currentPage: "",
+        search: "",
+        sort: ""
     });
+
     const history = useHistory();
 
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
@@ -66,7 +70,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -78,7 +84,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // CREATE A NEW LIST
@@ -90,7 +98,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -102,7 +112,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: "home"
+                    currentPage: "home",
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -114,7 +126,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: payload,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -126,7 +140,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // UPDATE A LIST
@@ -138,7 +154,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // START EDITING A LIST ITEM
@@ -150,7 +168,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: true,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             // START EDITING A LIST NAME
@@ -162,20 +182,11 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: true,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: store.currentPage
+                    currentPage: store.currentPage,
+                    search: store.search,
+                    sort: store.sort
                 });
             }
-            // case GlobalStoreActionType.SET_CURRENT_PAGE_HOME: {
-            //     return setStore({
-            //         idNamePairs: payload,
-            //         currentList: null,
-            //         newListCounter: store.newListCounter,
-            //         isListNameEditActive: false,
-            //         isItemEditActive: false,
-            //         listMarkedForDeletion: null,
-            //         currentPage: "home"
-            //     });
-            // }
             case GlobalStoreActionType.SET_CURRENT_PAGE_GROUP: {
                 return setStore({
                     idNamePairs: payload,
@@ -184,7 +195,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: "group"
+                    currentPage: "group",
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             case GlobalStoreActionType.SET_CURRENT_PAGE_PERSON: {
@@ -195,7 +208,9 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: "person"
+                    currentPage: "person",
+                    search: store.search,
+                    sort: store.sort
                 });
             }
             case GlobalStoreActionType.SET_CURRENT_PAGE_COMMUNITY: {
@@ -206,17 +221,34 @@ function GlobalStoreContextProvider(props) {
                     isListNameEditActive: false,
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
-                    currentPage: "community"
+                    currentPage: "community",
+                    search: store.search,
+                    sort: store.sort
                 });
             }
-            // case GlobalStoreActionType.SET_SEARCHING: {
-            //     return setStore({
-            //         searching:
-            //     });
-            // }
+            case GlobalStoreActionType.SET_SEARCH_AND_SORT:{
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    currentPage: store.currentPage,
+                    search: payload.search,
+                    sort: payload.sort
+                });
+            }
             default:
                 return store;
         }
+    }
+
+    store.setSearchAndSort =  async function (search,sort){
+        storeReducer({
+            type: GlobalStoreActionType.SET_SEARCH_AND_SORT,
+            payload: {search: search, sort:sort}
+        });
     }
 
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
@@ -340,7 +372,7 @@ function GlobalStoreContextProvider(props) {
                         getListPairs(top5List);
                     }else if(store.currentPage ==="group"){
                         async function getListPairs(top5List) {
-                            response = await api.getEditTop5ListPairs();
+                            response = await api.getGroupTop5ListPairs();
                             if (response.data.success) {
                                 let pairsArray = response.data.idNamePairs;
                                 storeReducer({
@@ -413,7 +445,7 @@ function GlobalStoreContextProvider(props) {
                         getListPairs(top5List);
                     }else if(store.currentPage ==="group"){
                         async function getListPairs(top5List) {
-                            response = await api.getEditTop5ListPairs();
+                            response = await api.getGroupTop5ListPairs();
                             if (response.data.success) {
                                 let pairsArray = response.data.idNamePairs;
                                 storeReducer({
@@ -494,8 +526,8 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.editToolLoadIdNamePairs = async function () { 
-        const response = await api.getEditTop5ListPairs();
+    store.groupLoadIdNamePairs = async function () { 
+        const response = await api.getGroupTop5ListPairs();
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             storeReducer({
@@ -508,6 +540,167 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+    store.personLoadIdNamePairs = async function () { 
+        const response = await api.getPersonTop5ListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            storeReducer({
+                type: GlobalStoreActionType.SET_CURRENT_PAGE_PERSON,
+                payload: pairsArray
+            });
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
+        }
+    }
+
+    store.communityLoadIdNamePairs = async function () { 
+        const response = await api.getCommunityTop5ListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            storeReducer({
+                type: GlobalStoreActionType.SET_CURRENT_PAGE_COMMUNITY,
+                payload: pairsArray
+            });
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
+        }
+    }
+
+
+    // store.loadIdNamePairsSearching = async function () { 
+    //     const response = await api.getTop5ListPairs();
+    //     console.log(store.search);
+    //     console.log(store.sort);
+    //     if (response.data.success) {
+    //         let pairsArray = response.data.idNamePairs;
+    //         pairsArray = pairsArray.filter(list => list.name.toLowerCase().startsWith(store.search));
+    //         if(store.sort === "view"){
+    //             pairsArray.sort(function(x, y){return y.viewNumber - x.viewNumber})
+    //         }else if(store.sort === "like"){
+    //             pairsArray.sort(function(x, y){return y.likeNumber - x.likeNumber})
+    //         }else if(store.sort === "dislike"){
+    //             pairsArray.sort(function(x, y){return y.dislikeNumber - x.dislikeNumber})
+    //         }else if(store.sort === "newest"){
+    //             pairsArray.sort(function(x, y){return new Date(y.publishDate) - new Date(x.publishDate)})
+    //         }else if(store.sort === "oldest"){
+    //             pairsArray.sort(function(x, y){return new Date(x.publishDate) - new Date(y.publishDate)})
+    //         }
+    //         storeReducer({
+    //             type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+    //             payload: pairsArray
+    //         });
+    //     }
+    //     else {
+    //         console.log("API FAILED TO GET THE LIST PAIRS");
+    //     }
+    // }
+
+    // store.groupLoadIdNamePairsSearching = async function ()  { 
+    //     const response = await api.getGroupTop5ListPairs();
+    //     if (response.data.success) {
+    //         let pairsArray = response.data.idNamePairs;
+    //         pairsArray = pairsArray.filter(list => list.name.toLowerCase()===store.search);
+    //         if(store.sort === "view"){
+    //             pairsArray.sort(function(x, y){return y.viewNumber - x.viewNumber})
+    //         }else if(store.sort === "like"){
+    //             pairsArray.sort(function(x, y){return y.likeNumber - x.likeNumber})
+    //         }else if(store.sort === "dislike"){
+    //             pairsArray.sort(function(x, y){return y.dislikeNumber - x.dislikeNumber})
+    //         }else if(store.sort === "newest"){
+    //             pairsArray.sort(function(x, y){return new Date(y.publishDate) - new Date(x.publishDate)})
+    //         }else if(store.sort === "oldest"){
+    //             pairsArray.sort(function(x, y){return new Date(x.publishDate) - new Date(y.publishDate)})
+    //         }
+    //         storeReducer({
+    //             type: GlobalStoreActionType.SET_CURRENT_PAGE_GROUP,
+    //             payload: pairsArray
+    //         });
+    //     }
+    //     else {
+    //         console.log("API FAILED TO GET THE LIST PAIRS");
+    //     }
+    // }
+
+    // store.personLoadIdNamePairsSearching = async function ()  { 
+    //     const response = await api.getPersonTop5ListPairsSearching();
+    //     if (response.data.success) {
+    //         let pairsArray = response.data.idNamePairs;
+    //         pairsArray = pairsArray.filter(list => list.owner === store.search);
+    //         if(store.sort === "view"){
+    //             pairsArray.sort(function(x, y){return y.viewNumber - x.viewNumber})
+    //         }else if(store.sort === "like"){
+    //             pairsArray.sort(function(x, y){return y.likeNumber - x.likeNumber})
+    //         }else if(store.sort === "dislike"){
+    //             pairsArray.sort(function(x, y){return y.dislikeNumber - x.dislikeNumber})
+    //         }else if(store.sort === "newest"){
+    //             pairsArray.sort(function(x, y){return new Date(y.publishDate) - new Date(x.publishDate)})
+    //         }else if(store.sort === "oldest"){
+    //             pairsArray.sort(function(x, y){return new Date(x.publishDate) - new Date(y.publishDate)})
+    //         }
+    //         storeReducer({
+    //             type: GlobalStoreActionType.SET_CURRENT_PAGE_PERSON,
+    //             payload: pairsArray
+    //         });
+    //     }
+    //     else {
+    //         console.log("API FAILED TO GET THE LIST PAIRS");
+    //     }
+    // }
+
+    // store.handleSortViews = async function ()  { 
+    //     if(store.currentPage === "home"){
+    //         store.loadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "group"){
+    //         store.groupLoadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "person"){
+    //         store.personLoadIdNamePairsSearching(store.search,store.sort);
+    //     }
+    // }
+        
+    // store.handleSortLikes = async function ()  { 
+    //     if(store.currentPage === "home"){
+    //         store.loadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "group"){
+    //         store.groupLoadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "person"){
+    //         store.personLoadIdNamePairsSearching(store.search,store.sort);
+    //     }
+    // }
+
+    // store.handleSortDislikes = async function ()  { 
+    //     if(store.currentPage === "home"){
+    //         store.loadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "group"){
+    //         store.groupLoadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "person"){
+    //         store.personLoadIdNamePairsSearching(store.search,store.sort);
+    //     }
+    // }
+
+    // store.handleSortNewest = async function ()  { 
+    //     if(store.currentPage === "home"){
+    //         store.loadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "group"){
+    //         store.groupLoadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "person"){
+    //         store.personLoadIdNamePairsSearching(store.search,store.sort);
+    //     }
+    // }
+
+    // store.handleSortOldest = async function ()  { 
+    //     if(store.currentPage === "home"){
+    //         store.loadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "group"){
+    //         store.groupLoadIdNamePairsSearching(store.search,store.sort);
+    //     }else if(store.currentPage === "person"){
+    //         store.personLoadIdNamePairsSearching(store.search,store.sort);
+    //     }
+    // }
+
+
+    
     store.changeViewNumber = async function (id) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
@@ -529,25 +722,39 @@ function GlobalStoreContextProvider(props) {
                             }
                         }
                         getListPairs(top5List);
-                    }else if(store.currentPage ==="group"){
-                        async function getListPairs(top5List) {
-                            response = await api.getEditTop5ListPairs();
-                            if (response.data.success) {
-                                let pairsArray = response.data.idNamePairs;
-                                storeReducer({
-                                    type: GlobalStoreActionType.SET_CURRENT_PAGE_GROUP,
-                                    payload: pairsArray
-                                });
-                            }
-                        }
-                        getListPairs(top5List);
                     }
+                    // }else if(store.currentPage ==="group"){
+                    //     async function getListPairs(top5List) {
+                    //         response = await api.getGroupTop5ListPairs();
+                    //         if (response.data.success) {
+                    //             let pairsArray = response.data.idNamePairs;
+                    //             storeReducer({
+                    //                 type: GlobalStoreActionType.SET_CURRENT_PAGE_GROUP,
+                    //                 payload: pairsArray
+                    //             });
+                    //         }
+                    //     }
+                    //     getListPairs(top5List);
+                    // }else if(store.currentPage ==="person"){
+                    //     async function getListPairs(top5List) {
+                    //         response = await api.getPersonTop5ListPairs();
+                    //         if (response.data.success) {
+                    //             let pairsArray = response.data.idNamePairs;
+                    //             storeReducer({
+                    //                 type: GlobalStoreActionType.SET_CURRENT_PAGE_PERSON,
+                    //                 payload: pairsArray
+                    //             });
+                    //         }
+                    //     }
+                    //     getListPairs(top5List);
+                    // }
                     
                 }
             }
             updateList(top5List);
         }
     }
+
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE
@@ -664,35 +871,6 @@ function GlobalStoreContextProvider(props) {
         store.updateCurrentList();
         store.closeCurrentList();
     }
-
-
-    // store.setCurrentPage_Home = function () {
-    //     storeReducer({
-    //         type: GlobalStoreActionType.SET_CURRENT_PAGE_HOME,
-    //         payload: pairsArray
-    //     });
-    // }
-
-    // store.setCurrentPage_Group = function () {
-    //     storeReducer({
-    //         type: GlobalStoreActionType.SET_CURRENT_PAGE_GROUP,
-    //         payload: pairsArray
-    //     });
-    // }
-
-    // store.setCurrentPage_Person = function () {
-    //     storeReducer({
-    //         type: GlobalStoreActionType.SET_CURRENT_PAGE_PERSON,
-    //         payload:pairsArray
-    //     });
-    // }
-
-    // store.setCurrentPage_Community = function () {
-    //     storeReducer({
-    //         type: GlobalStoreActionType.SET_CURRENT_PAGE_COMMUNITY,
-    //         payload: pairsArray
-    //     });
-    // }
 
 
     return (

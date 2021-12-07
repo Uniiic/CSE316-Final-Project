@@ -9,7 +9,7 @@ import AuthContext from '../auth'
     @author McKilla Gorilla
 */
 function Statusbar(props) {
-    // const { store } = useContext(GlobalStoreContext);
+    const { store } = useContext(GlobalStoreContext);
     const { handleCreateNewList } = props;
     const { auth } = useContext(AuthContext);
     // let text ="";
@@ -22,12 +22,12 @@ function Statusbar(props) {
                 aria-label="add"
                 id="add-list-button"
                 onClick={handleCreateNewList}
-                disabled={auth.page !== "home"}
-                style ={(auth.page === "home")?{}:{color:"grey"}}
+                disabled={store.currentPage !== "home"}
+                style ={(store.currentPage === "home")?{}:{color:"grey"}}
             >
                 <AddIcon />
             </Fab>
-                <Typography variant="h2" style ={(auth.page === "home")?{}:{color:"grey"}} >Your Lists</Typography>
+                <Typography variant="h2" style ={(store.currentPage === "home")?{}:{color:"grey"}} >Your Lists</Typography>
         </div>
     );
 }

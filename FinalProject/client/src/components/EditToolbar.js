@@ -23,7 +23,7 @@ function EditToolbar(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const { auth } = useContext(AuthContext);
-    const [currentPage,setCurrentPage] = useState("");
+    const [search,setSearch] = useState("");
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -33,6 +33,30 @@ function EditToolbar(props) {
         setAnchorEl(null);
     };
 
+    const handleSortViews = () => {
+        store.setSearchAndSort(search,"view");
+        handleMenuClose();
+    };
+
+    const handleSortLikes = () => {
+        store.setSearchAndSort(search,"like");
+        handleMenuClose();
+    };
+
+    const handleSortDislikes = () => {
+        store.setSearchAndSort(search,"dislike");
+        handleMenuClose();
+    };
+
+    const handleSortNewest = () => {
+        store.setSearchAndSort(search,"newest");
+        handleMenuClose();
+    };
+
+    const handleSortOldest = () => {
+        store.setSearchAndSort(search,"oldest");
+        handleMenuClose();
+    };
 
 
     const sortMenuID = "primary-sort-menu"
@@ -52,51 +76,49 @@ function EditToolbar(props) {
         open={isMenuOpen}
         onClose={handleMenuClose}
     >
-        <MenuItem onClick={handleMenuClose}>Publish Data(Newest)</MenuItem>  
-        <MenuItem onClick={handleMenuClose}>Publish Data(Oldest)</MenuItem>  
-        <MenuItem onClick={handleMenuClose}>Views</MenuItem>  
-        <MenuItem onClick={handleMenuClose}>Likes</MenuItem> 
-        <MenuItem onClick={handleMenuClose}>Dislikes</MenuItem>   
+        <MenuItem onClick={handleSortNewest}>Publish Data(Newest)</MenuItem>  
+        <MenuItem onClick={handleSortOldest}>Publish Data(Oldest)</MenuItem>  
+        <MenuItem onClick={handleSortViews}>Views</MenuItem>  
+        <MenuItem onClick={handleSortLikes}>Likes</MenuItem> 
+        <MenuItem onClick={handleSortDislikes}>Dislikes</MenuItem>   
     </Menu>
 
 
 
 
     function handleHomeIconSeaching(){
-        let text = document.getElementById("search-bar").value.toLowerCase();
+        setSearch("");
+        store.setSearchAndSort("","");
         store.loadIdNamePairs();
-        // store.loadIdNamePairs(text,"home");
     }
 
     function handleGroupsIconSeaching(){
-        let text = document.getElementById("search-bar").value.toLowerCase();
-        store.editToolLoadIdNamePairs();
-        // store.loadIdNamePairs(text,"group");
+        setSearch("");
+        store.setSearchAndSort("","");
+        store.groupLoadIdNamePairs();
     }
 
-    // function handlePersonIconSeaching(){
-    //     store.setCurrentPage_Person("");
-    //     // store.loadIdNamePairs("","person");
-    // }
+    function handlePersonIconSeaching(){
+        setSearch("");
+        store.setSearchAndSort("","");
+        store.personLoadIdNamePairs();
+    }
 
-    // function handleCommunityIconSeaching(){
-    //     let text = document.getElementById("search-bar").value;
-    //     store.setCurrentPage_Community(text);
-    //     // store.loadIdNamePairs(text,"community");
-    // }
+    function handleCommunityIconSeaching(){
+        setSearch("");
+        store.setSearchAndSort("","");
+        store.communityLoadIdNamePairs();
+    }
 
-    // function handleSearch(text){
-    //     console.log(store.currentPage);
-    //     if(store.currentPage==="home"){
-    //         store.loadIdNamePairs(text,"home");
-    //     }else if(store.currentPage==="group"){
-    //         store.loadIdNamePairs(text,"group");
-    //     }else if(store.currentPage==="person"){
-    //         store.loadIdNamePairs(text,"person");
-    //     }else if(store.currentPage==="community"){
-    //         store.loadIdNamePairs(text,"community");
-    //     }
-    // }
+    function handleSearch(text){
+        if(text === ""){
+            setSearch("");
+            store.setSearchAndSort("","");
+        }else{
+            setSearch(text);
+            store.setSearchAndSort(text,"");
+        }
+    }
 
     return (
         <div>
@@ -124,8 +146,8 @@ function EditToolbar(props) {
                 id="person-button"
                 >
                     <PersonIcon 
-                        // onClick={handlePersonIconSeaching}
-                        // style={(store.currentPage=== "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        onClick={handlePersonIconSeaching}
+                        style={(store.currentPage=== "person")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -133,8 +155,8 @@ function EditToolbar(props) {
                 id="functions-button"
                 >
                     <FunctionsIcon 
-                        // onClick={handleCommunityIconSeaching}
-                        // style={(store.currentPage === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
+                        onClick={handleCommunityIconSeaching}
+                        style={(store.currentPage === "community")?{fontSize:50,borderStyle:"solid",borderColor:"green"}:{fontSize:50}}
                     />
                 </Button>
 
@@ -143,12 +165,12 @@ function EditToolbar(props) {
                     id="search-bar"
                     style={{width:300}}
                     placeholder = 'Search'
-                    // onKeyPress={(e)=>{if(e.key==="Enter" && e.target.value != ""){
-                    //     handleSearch(e.target.value.toLowerCase());
-                    //     e.target.value = "";
-                    //                 }
-                    //         }
-                    //     }
+                    onKeyPress={(e)=>{if(e.key==="Enter"){
+                        handleSearch(e.target.value.toLowerCase());
+                        // e.target.value = "";
+                                    }
+                            }
+                        }
                     />
                 </div>
 

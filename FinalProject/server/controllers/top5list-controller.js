@@ -173,7 +173,112 @@ getTop5ListPairs = async (req, res) => {
 }
 
 
-getEditTop5ListPairs = async (req, res) => {
+getGroupTop5ListPairs = async (req, res) => {
+    const loggedInUser = await User.findOne({_id:req.userId});
+    await Top5List.find({published: true}, (err, top5Lists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!top5Lists) {
+            console.log("!top5Lists.length");
+            return res
+                .status(404)
+                .json({ success: false, error: 'Top 5 Lists not found' })
+        }
+        else {
+            // PUT ALL THE LISTS INTO ID, NAME PAIRS
+            let pairs = [];
+
+            for (let key in top5Lists) {
+                let list = top5Lists[key];
+                let pair = {
+                    _id: list._id,
+                    name: list.name,
+                    owner: list.owner,
+                    items: list.items,
+                    viewNumber: list.viewNumber,
+                    likeNumber: list.likeNumber,
+                    likeList:list.likeList,
+                    dislikeNumber: list.dislikeNumber,
+                    dislikeList:list.dislikeList,
+                    comments: list.comments,
+                    published: list.published,
+                    publishDate: list.publishDate,
+                    publishDateString: list.publishDateString,
+                    ownerEmail: list.ownerEmail
+                };
+                pairs.push(pair);
+            }
+            return res.status(200).json({ success: true, idNamePairs: pairs })
+        }
+    }).catch(err => console.log(err))
+}
+
+
+getPersonTop5ListPairs = async (req, res) => {
+    const loggedInUser = await User.findOne({_id:req.userId});
+    await Top5List.find({}, (err, top5Lists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!top5Lists) {
+            console.log("!top5Lists.length");
+            return res
+                .status(404)
+                .json({ success: false, error: 'Top 5 Lists not found' })
+        }
+        else {
+            // PUT ALL THE LISTS INTO ID, NAME PAIRS
+            let pairs = [];
+            return res.status(200).json({ success: true, idNamePairs: pairs })
+        }
+    }).catch(err => console.log(err))
+}
+
+
+getPersonTop5ListPairsSearching = async (req, res) => {
+    const loggedInUser = await User.findOne({_id:req.userId});
+    await Top5List.find({published: true}, (err, top5Lists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!top5Lists) {
+            console.log("!top5Lists.length");
+            return res
+                .status(404)
+                .json({ success: false, error: 'Top 5 Lists not found' })
+        }
+        else {
+            // PUT ALL THE LISTS INTO ID, NAME PAIRS
+            let pairs = [];
+
+            for (let key in top5Lists) {
+                let list = top5Lists[key];
+                let pair = {
+                    _id: list._id,
+                    name: list.name,
+                    owner: list.owner,
+                    items: list.items,
+                    viewNumber: list.viewNumber,
+                    likeNumber: list.likeNumber,
+                    likeList:list.likeList,
+                    dislikeNumber: list.dislikeNumber,
+                    dislikeList:list.dislikeList,
+                    comments: list.comments,
+                    published: list.published,
+                    publishDate: list.publishDate,
+                    publishDateString: list.publishDateString,
+                    ownerEmail: list.ownerEmail
+                };
+                pairs.push(pair);
+            }
+            return res.status(200).json({ success: true, idNamePairs: pairs })
+        }
+    }).catch(err => console.log(err))
+}
+
+
+getCommunityTop5ListPairs = async (req, res) => {
     const loggedInUser = await User.findOne({_id:req.userId});
     await Top5List.find({published: true}, (err, top5Lists) => {
         if (err) {
@@ -222,5 +327,8 @@ module.exports = {
     getTop5Lists,
     getTop5ListPairs,
     getTop5ListById,
-    getEditTop5ListPairs
+    getGroupTop5ListPairs,
+    getPersonTop5ListPairs,
+    getCommunityTop5ListPairs,
+    getPersonTop5ListPairsSearching
 }

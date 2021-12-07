@@ -11,7 +11,13 @@ router.get('/top5list/:id', auth.verify, Top5ListController.getTop5ListById)
 router.get('/top5lists', auth.verify, Top5ListController.getTop5Lists)
 router.get('/top5listpairs', auth.verify, Top5ListController.getTop5ListPairs)
 
-router.get('/editTop5ListPairs', auth.verify, Top5ListController.getEditTop5ListPairs)
+router.get('/groupTop5ListPairs', auth.verify, Top5ListController.getGroupTop5ListPairs)
+router.get('/personTop5ListPairs', auth.verify, Top5ListController.getPersonTop5ListPairs)
+router.get('/communityTop5ListPairs', auth.verify, Top5ListController.getCommunityTop5ListPairs)
+
+router.get('/personTop5ListPairsSearching', auth.verify, Top5ListController.getPersonTop5ListPairsSearching)
+
+
 
 router.post('/register', UserController.registerUser)
 router.post('/login', UserController.loginUser)
