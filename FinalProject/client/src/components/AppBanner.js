@@ -35,9 +35,7 @@ export default function AppBanner() {
     function getAccountMenu(loggedIn) {
         if(loggedIn === true){
             return auth.user.firstName.charAt(0).toUpperCase()+auth.user.lastName.charAt(0).toUpperCase();
-        }else{
-            return <AccountCircle />;
-        }   
+        }
     }
 
     const CreateAccount = <MenuItem ><Link to='/register/'>Create New Account</Link></MenuItem>

@@ -11,6 +11,7 @@ getLoggedIn = async (req, res) => {
             user: {
                 firstName: loggedInUser.firstName,
                 lastName: loggedInUser.lastName,
+                userName: loggedInUser.userName,
                 email: loggedInUser.email
             }
         }).send();
@@ -70,6 +71,7 @@ loginUser = async (req,res) => {
             user: {
                 firstName: existingUser.firstName,
                 lastName: existingUser.lastName,
+                userName: existingUser.userName,
                 email: existingUser.email
             }
         }).send();
@@ -81,7 +83,7 @@ loginUser = async (req,res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, passwordVerify } = req.body;
+        const { firstName, lastName, userName, email, password, passwordVerify } = req.body;
         if (!firstName || !lastName || !email || !password || !passwordVerify) {
             return res
                 .status(400)
@@ -116,7 +118,7 @@ registerUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            firstName, lastName, email, passwordHash
+            firstName, lastName, userName, email, passwordHash
         });
         const savedUser = await newUser.save();
 
@@ -132,6 +134,7 @@ registerUser = async (req, res) => {
             user: {
                 firstName: savedUser.firstName,
                 lastName: savedUser.lastName,
+                userName: savedUser.userName,
                 email: savedUser.email
             }
         }).send();

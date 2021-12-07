@@ -103,7 +103,7 @@ const HomeScreen = () => {
                     }
                     </List>;
             }else if(store.currentPage === "person"){
-                let exactWithidNamePairs = store.idNamePairs.filter(e => e.ownerName.toLowerCase() === store.search.toLowerCase());
+                let exactWithidNamePairs = store.idNamePairs.filter(e => e.owner.toLowerCase() === store.search.toLowerCase());
                 listCard = 
                     <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
                     {
@@ -179,7 +179,7 @@ const HomeScreen = () => {
                     }
                     </List>;
             }else if(store.currentPage === "person"){
-                let exactWithidNamePairs = store.idNamePairs.filter(e => e.ownerName.toLowerCase() === store.search.toLowerCase());
+                let exactWithidNamePairs = store.idNamePairs.filter(e => e.owner.toLowerCase() === store.search.toLowerCase());
                 listCard = 
                     <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
                     {
@@ -194,7 +194,8 @@ const HomeScreen = () => {
                     </List>;
             }
         }
-    }else if(store.sort === "like"){ 
+    }
+     if(store.sort === "like"){ 
         store.idNamePairs.sort(function(x, y){return y.likeNumber - x.likeNumber});
         if(store.search === "" && store.currentPage === "person"){
             let emptyList = [];
@@ -253,7 +254,7 @@ const HomeScreen = () => {
                     }
                     </List>;
             }else if(store.currentPage === "person"){
-                let exactWithidNamePairs = store.idNamePairs.filter(e => e.ownerName.toLowerCase() === store.search.toLowerCase());
+                let exactWithidNamePairs = store.idNamePairs.filter(e => e.owner.toLowerCase() === store.search.toLowerCase());
                 listCard = 
                     <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
                     {
@@ -268,7 +269,8 @@ const HomeScreen = () => {
                     </List>;
             }
         }
-    }else if(store.sort === "dislike"){ 
+    }
+    if(store.sort === "dislike"){ 
         store.idNamePairs.sort(function(x, y){return y.dislikeNumber - x.dislikeNumber});
         if(store.search === "" && store.currentPage === "person"){
             let emptyList = [];
@@ -327,7 +329,7 @@ const HomeScreen = () => {
                     }
                     </List>;
             }else if(store.currentPage === "person"){
-                let exactWithidNamePairs = store.idNamePairs.filter(e => e.ownerName.toLowerCase() === store.search.toLowerCase());
+                let exactWithidNamePairs = store.idNamePairs.filter(e => e.owner.toLowerCase() === store.search.toLowerCase());
                 listCard = 
                     <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
                     {
@@ -342,7 +344,8 @@ const HomeScreen = () => {
                     </List>;
             }
         }
-    }else if(store.sort === "newest"){ 
+    }
+    if(store.sort === "newest"){ 
         store.idNamePairs.sort(function(x, y){return new Date(y.publishDate) - new Date(x.publishDate)});
         if(store.search === "" && store.currentPage === "person"){
             let emptyList = [];
@@ -401,7 +404,7 @@ const HomeScreen = () => {
                     }
                     </List>;
             }else if(store.currentPage === "person"){
-                let exactWithidNamePairs = store.idNamePairs.filter(e => e.ownerName.toLowerCase() === store.search.toLowerCase());
+                let exactWithidNamePairs = store.idNamePairs.filter(e => e.owner.toLowerCase() === store.search.toLowerCase());
                 listCard = 
                     <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
                     {
@@ -416,7 +419,8 @@ const HomeScreen = () => {
                     </List>;
             }
         }
-    }else if(store.sort === "oldest"){ 
+    } 
+    if(store.sort === "oldest"){ 
         store.idNamePairs.sort(function(x, y){return new Date(x.publishDate) - new Date(y.publishDate)});
         if(store.search === "" && store.currentPage === "person"){
             let emptyList = [];
@@ -475,7 +479,7 @@ const HomeScreen = () => {
                     }
                     </List>;
             }else if(store.currentPage === "person"){
-                let exactWithidNamePairs = store.idNamePairs.filter(e => e.ownerName.toLowerCase() === store.search.toLowerCase());
+                let exactWithidNamePairs = store.idNamePairs.filter(e => e.owner.toLowerCase() === store.search.toLowerCase());
                 listCard = 
                     <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
                     {
@@ -491,7 +495,25 @@ const HomeScreen = () => {
             }
         }
     }
-
+    
+    if(store.currentPage === "community"){
+        let community = store.idNamePairs;
+        console.log();
+                listCard = 
+                    <List sx={{ width: '90%', left: '5%', bgcolor: '#e6e6e6' }}>
+                    {
+                        community.map((pair) => (
+                            <ListCard
+                                key={pair._id}
+                                idNamePair={pair}
+                                selected={false}
+                            />
+                        ))
+                    }
+                    </List>;
+    }
+    
+    
     
     
 

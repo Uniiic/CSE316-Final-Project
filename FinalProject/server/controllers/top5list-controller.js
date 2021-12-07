@@ -230,6 +230,26 @@ getPersonTop5ListPairs = async (req, res) => {
         else {
             // PUT ALL THE LISTS INTO ID, NAME PAIRS
             let pairs = [];
+            for (let key in top5Lists) {
+                let list = top5Lists[key];
+                let pair = {
+                    _id: list._id,
+                    name: list.name,
+                    owner: list.owner,
+                    items: list.items,
+                    viewNumber: list.viewNumber,
+                    likeNumber: list.likeNumber,
+                    likeList:list.likeList,
+                    dislikeNumber: list.dislikeNumber,
+                    dislikeList:list.dislikeList,
+                    comments: list.comments,
+                    published: list.published,
+                    publishDate: list.publishDate,
+                    publishDateString: list.publishDateString,
+                    ownerEmail: list.ownerEmail
+                };
+                pairs.push(pair);
+            }
             return res.status(200).json({ success: true, idNamePairs: pairs })
         }
     }).catch(err => console.log(err))
